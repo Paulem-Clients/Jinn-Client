@@ -1,8 +1,8 @@
-package fr.paulem.launcher.ui;
+package io.github.paulem.launchermc.ui;
 
-import fr.paulem.launcher.Launcher;
-import fr.paulem.launcher.ui.panel.IPanel;
-import fr.paulem.launcher.ui.panels.partials.TopBar;
+import io.github.paulem.launchermc.Launcher;
+import io.github.paulem.launchermc.ui.panel.IPanel;
+import io.github.paulem.launchermc.ui.panels.partials.TopBar;
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import fr.flowarg.flowcompat.Platform;
 import javafx.geometry.VPos;

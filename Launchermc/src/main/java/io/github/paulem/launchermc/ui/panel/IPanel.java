@@ -1,6 +1,6 @@
-package fr.paulem.launcher.ui.panel;
+package io.github.paulem.launchermc.ui.panel;
 
-import fr.paulem.launcher.ui.PanelManager;
+import io.github.paulem.launchermc.ui.PanelManager;
 import javafx.scene.layout.GridPane;
 
 public interface IPanel {

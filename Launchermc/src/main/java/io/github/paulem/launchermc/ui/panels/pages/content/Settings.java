@@ -1,9 +1,9 @@
-package fr.paulem.launcher.ui.panels.pages.content;
+package io.github.paulem.launchermc.ui.panels.pages.content;
 
 import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
-import fr.paulem.launcher.Launcher;
-import fr.paulem.launcher.ui.PanelManager;
+import io.github.paulem.launchermc.Launcher;
+import io.github.paulem.launchermc.ui.PanelManager;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,13 +1,13 @@
-package fr.paulem.launcher;
+package io.github.paulem.launchermc;
 
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
-import fr.paulem.launcher.ui.PanelManager;
-import fr.paulem.launcher.ui.panels.pages.App;
-import fr.paulem.launcher.ui.panels.pages.Login;
+import io.github.paulem.launchermc.ui.PanelManager;
+import io.github.paulem.launchermc.ui.panels.pages.App;
+import io.github.paulem.launchermc.ui.panels.pages.Login;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
 import fr.theshark34.openlauncherlib.util.Saver;

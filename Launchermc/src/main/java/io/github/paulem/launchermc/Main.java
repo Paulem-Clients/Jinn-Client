@@ -1,4 +1,4 @@
-package fr.paulem.launcher;
+package io.github.paulem.launchermc;
 
 import javafx.application.Application;
 
@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             Class.forName("javafx.application.Application");
-            Application.launch(fr.paulem.launcher.Launcher.class, args);
+            Application.launch(Launcher.class, args);
         } catch (ClassNotFoundException e) {
             // Mauvaise version de java
             JOptionPane.showMessageDialog(

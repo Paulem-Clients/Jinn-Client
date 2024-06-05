@@ -1,6 +1,6 @@
-package fr.paulem.launcher.utils;
+package io.github.paulem.launchermc.utils;
 
-import fr.paulem.launcher.ui.panel.IPanel;
+import io.github.paulem.launchermc.ui.panel.IPanel;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 

@@ -1,4 +1,4 @@
-package fr.paulem.launcher.ui.panel;
+package io.github.paulem.launchermc.ui.panel;
 
 import javafx.scene.Node;
 

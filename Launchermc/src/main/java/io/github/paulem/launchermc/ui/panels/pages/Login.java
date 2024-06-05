@@ -1,9 +1,9 @@
-package fr.paulem.launcher.ui.panels.pages;
+package io.github.paulem.launchermc.ui.panels.pages;
 
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
-import fr.paulem.launcher.Launcher;
-import fr.paulem.launcher.ui.PanelManager;
-import fr.paulem.launcher.ui.panel.Panel;
+import io.github.paulem.launchermc.Launcher;
+import io.github.paulem.launchermc.ui.PanelManager;
+import io.github.paulem.launchermc.ui.panel.Panel;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Platform;

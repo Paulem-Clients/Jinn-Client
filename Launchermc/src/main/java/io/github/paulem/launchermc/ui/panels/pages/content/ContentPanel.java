@@ -1,7 +1,7 @@
-package fr.paulem.launcher.ui.panels.pages.content;
+package io.github.paulem.launchermc.ui.panels.pages.content;
 
-import fr.paulem.launcher.ui.panel.Panel;
-import fr.paulem.launcher.utils.DirectFadeTransition;
+import io.github.paulem.launchermc.ui.panel.Panel;
+import io.github.paulem.launchermc.utils.DirectFadeTransition;
 import javafx.animation.FadeTransition;
 
 public abstract class ContentPanel extends Panel {

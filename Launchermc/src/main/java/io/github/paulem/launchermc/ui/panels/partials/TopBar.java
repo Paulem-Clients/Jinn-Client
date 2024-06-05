@@ -1,9 +1,9 @@
-package fr.paulem.launcher.ui.panels.partials;
+package io.github.paulem.launchermc.ui.panels.partials;
 
 import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
-import fr.paulem.launcher.ui.PanelManager;
-import fr.paulem.launcher.ui.panel.Panel;
+import io.github.paulem.launchermc.ui.PanelManager;
+import io.github.paulem.launchermc.ui.panel.Panel;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

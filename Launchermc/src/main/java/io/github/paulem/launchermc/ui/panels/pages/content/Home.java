@@ -1,4 +1,4 @@
-package fr.paulem.launcher.ui.panels.pages.content;
+package io.github.paulem.launchermc.ui.panels.pages.content;
 
 import fr.flowarg.flowupdater.FlowUpdater;
 import fr.flowarg.flowupdater.download.DownloadList;
@@ -8,17 +8,16 @@ import fr.flowarg.flowupdater.versions.VanillaVersion;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
 import fr.flowarg.openlauncherlib.NoFramework;
-import fr.paulem.launcher.Launcher;
-import fr.paulem.launcher.game.MinecraftInfos;
-import fr.paulem.launcher.ui.PanelManager;
+import io.github.paulem.launchermc.Launcher;
+import io.github.paulem.launchermc.game.MinecraftInfos;
+import io.github.paulem.launchermc.ui.PanelManager;
 import fr.theshark34.openlauncherlib.minecraft.GameFolder;
 import fr.theshark34.openlauncherlib.util.Saver;
+import io.github.paulem.launchermc.utils.Errors;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
@@ -140,6 +139,7 @@ public class Home extends ContentPanel {
         try {
             final VanillaVersion vanillaVersion = new VanillaVersion.VanillaVersionBuilder()
                     .withName(MinecraftInfos.GAME_VERSION)
+                    .withSnapshot(true)
                     .build();
 
             final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
@@ -180,6 +180,10 @@ public class Home extends ContentPanel {
             });
         } catch (Exception e) {
             Launcher.getInstance().getLogger().printStackTrace(e);
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Une erreur est survenue ! Merci d'envoyer ceci à paulem :\n" + Errors.getStackTrace("Une erreur est survenue :", e), ButtonType.OK);
+                alert.showAndWait();
+            });
         }
     }
 

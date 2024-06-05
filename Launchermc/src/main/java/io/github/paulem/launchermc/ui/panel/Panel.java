@@ -1,7 +1,7 @@
-package fr.paulem.launcher.ui.panel;
+package io.github.paulem.launchermc.ui.panel;
 
-import fr.paulem.launcher.Launcher;
-import fr.paulem.launcher.ui.PanelManager;
+import io.github.paulem.launchermc.Launcher;
+import io.github.paulem.launchermc.ui.PanelManager;
 import fr.flowarg.flowlogger.ILogger;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;

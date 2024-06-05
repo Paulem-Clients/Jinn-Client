@@ -7,7 +7,7 @@ plugins {
 }
 apply plugin: 'org.openjfx.javafxplugin'
 
-group 'fr.paulem.launcher'
+group 'io.github.paulem.launchermc'
 
 repositories {
     mavenCentral()
@@ -39,7 +39,7 @@ jar {
 }
 
 application {
-    getMainClass().set('fr.paulem.launcher.Main')
+    getMainClass().set('io.github.paulem.launchermc.Main')
 }
 
 javafx {
@@ -47,6 +47,6 @@ javafx {
 }
 
 compileJava {
-    //sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = targetCompatibility = JavaVersion.toVersion(JAVA_VERSION)
     options.encoding = 'UTF-8'
 }
