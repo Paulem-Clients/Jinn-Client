@@ -1,9 +1,13 @@
 plugins {
-    id 'java'
+    id 'idea'
+    id 'java-library'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.+'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
+apply plugin: 'org.openjfx.javafxplugin'
 
-group 'fr.paulem.launcherupdater'
+group 'io.github.paulem.launcherupdater'
 version '1.0'
 
 repositories {
@@ -11,13 +15,17 @@ repositories {
 }
 
 application {
-    getMainClass().set('fr.paulem.launcherupdater.Main')
+    getMainClass().set('io.github.paulem.launcherupdater.Main')
 }
 
-test {
-    useJUnitPlatform()
+javafx {
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing']
 }
 
 compileJava {
     options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
 }

@@ -1,13 +1,14 @@
 plugins {
     id 'idea'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.github.johnrengelman.shadow' version '8.+'
     id 'java-library'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 apply plugin: 'org.openjfx.javafxplugin'
 
 group 'io.github.paulem.launchermc'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -49,4 +50,8 @@ javafx {
 compileJava {
     sourceCompatibility = targetCompatibility = JavaVersion.toVersion(JAVA_VERSION)
     options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
 }

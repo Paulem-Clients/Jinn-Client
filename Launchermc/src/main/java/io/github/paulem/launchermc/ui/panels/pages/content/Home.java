@@ -21,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 
+import javax.swing.*;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 
@@ -180,10 +181,12 @@ public class Home extends ContentPanel {
             });
         } catch (Exception e) {
             Launcher.getInstance().getLogger().printStackTrace(e);
-            Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Une erreur est survenue ! Merci d'envoyer ceci à paulem :\n" + Errors.getStackTrace("Une erreur est survenue :", e), ButtonType.OK);
-                alert.showAndWait();
-            });
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Une erreur est survenue ! Merci d'envoyer ceci à paulem :\n" + Errors.getStackTrace("Une erreur est survenue :", e),
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 

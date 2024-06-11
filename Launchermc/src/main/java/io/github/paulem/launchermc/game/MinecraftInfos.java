@@ -14,7 +14,7 @@ public class MinecraftInfos {
 
     // ----- POUR FABRIC -----
     public static final FabricVersion GAME = new FabricVersion.FabricVersionBuilder()
-            .withFabricVersion(MinecraftInfos.MODLOADER_VERSION)
+            //.withFabricVersion(MinecraftInfos.MODLOADER_VERSION)
             .withMods(Mod.getModsFromJson(MinecraftInfos.MODS_LIST_URL))
             .withFileDeleter(new ModFileDeleter(true))
             .build();

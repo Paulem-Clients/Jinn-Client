@@ -1,11 +1,14 @@
-package fr.paulem.launcherupdater;
+package io.github.paulem.launcherupdater;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import javax.swing.*;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,11 +27,16 @@ public class Main {
         try {
             downloadFromGithub();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Une erreur est survenue, merci de le dire à paulem !\n" + e.getMessage(),
+                    "Erreur",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 
-    public static void launch() {
+    public static void launch() throws IOException {
         try (JarFile jarFile = new JarFile("Launcher.jar")) {
             final Manifest manifest = jarFile.getManifest();
             final Attributes attributes = manifest.getMainAttributes();
@@ -37,16 +45,7 @@ public class Main {
             if (javaVersion.isEmpty())
                 throw new IllegalStateException("Version isn't specified, ask paulem on Discord!");
 
-            if (javaVersion.equals("8"))
-                new ProcessBuilder("j8\\bin\\java.exe", "-jar", "Launcher.jar").start();
-
-            else if (javaVersion.equals("17"))
-                new ProcessBuilder("j17\\bin\\java.exe", "-jar", "Launcher.jar").start();
-
-            else
-                throw new IllegalStateException("Error with java " + javaVersion);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            new ProcessBuilder("j" + javaVersion + "\\bin\\java.exe", "-jar", "Launcher.jar").start();
         }
     }
 
@@ -54,16 +53,16 @@ public class Main {
         final String apiUrl = "https://api.github.com/repos/Paulem79/Launcher/releases/latest";
         final String jsonString = getJsonStringFromUrl(apiUrl);
         final String downloadUrl = getDownloadUrlFromJsonString(jsonString);
-        final URL fileUrl = new URL(downloadUrl);
+        final URL fileUrl = new URI(downloadUrl).toURL();
         final HttpURLConnection connection = (HttpURLConnection)fileUrl.openConnection();
 
         compareFile(connection, downloadUrl);
         launch();
     }
 
-    public static void downloadFile(final String url) throws IOException {
+    public static void downloadFile(final String url) throws IOException, URISyntaxException {
         final Path localFilePath = Paths.get("Launcher.jar");
-        final URL fileUrl = new URL(url);
+        final URL fileUrl = new URI(url).toURL();
         final HttpURLConnection connection = (HttpURLConnection)fileUrl.openConnection();
 
         try (final InputStream in = connection.getInputStream();
@@ -76,8 +75,8 @@ public class Main {
         }
     }
 
-    public static String getJsonStringFromUrl(final String url) throws IOException, NoSuchAlgorithmException, KeyManagementException {
-        final URL apiUrl = new URL(url);
+    public static String getJsonStringFromUrl(final String url) throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
+        final URL apiUrl = new URI(url).toURL();
         final HttpsURLConnection connection = (HttpsURLConnection)apiUrl.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
