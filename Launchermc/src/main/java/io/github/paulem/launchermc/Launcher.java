@@ -9,8 +9,8 @@ import io.github.paulem.launchermc.ui.PanelManager;
 import io.github.paulem.launchermc.ui.panels.pages.App;
 import io.github.paulem.launchermc.ui.panels.pages.Login;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
-import fr.theshark34.openlauncherlib.minecraft.util.GameDirGenerator;
 import fr.theshark34.openlauncherlib.util.Saver;
+import io.github.paulem.launchermc.utils.GameUtils;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -23,7 +23,7 @@ import java.util.UUID;
 public class Launcher extends Application {
     private static Launcher instance;
     private final ILogger logger;
-    private final Path launcherDir = GameDirGenerator.createGameDir("paulem-launcher", true);
+    private final Path launcherDir = GameUtils.createGameDir("paulem-launcher", true);
     private final Saver saver;
     private PanelManager panelManager;
     private AuthInfos authInfos = null;
@@ -31,6 +31,7 @@ public class Launcher extends Application {
     public Launcher() {
         instance = this;
         this.logger = new Logger("[Launcher]", this.launcherDir.resolve("launcher.log"));
+
         if (Files.notExists(this.launcherDir))
         {
             try
@@ -53,12 +54,12 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) {
-        this.logger.info("Starting launcher");
+        this.logger.info("Lancement du launcher...");
         this.panelManager = new PanelManager(this, stage);
         this.panelManager.init();
 
         if (this.isUserAlreadyLoggedIn()) {
-            logger.info("Hello " + authInfos.getUsername());
+            logger.info("Salut " + authInfos.getUsername() + " !");
 
             this.panelManager.showPanel(new App());
         } else {

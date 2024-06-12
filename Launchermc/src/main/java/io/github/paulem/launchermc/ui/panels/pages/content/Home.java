@@ -24,14 +24,16 @@ import javafx.scene.layout.RowConstraints;
 import javax.swing.*;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class Home extends ContentPanel {
     private final Saver saver = Launcher.getInstance().getSaver();
+    private static boolean isDownloadingOrPlaying = false;
+
     final GridPane boxPane = new GridPane();
     final ProgressBar progressBar = new ProgressBar();
     final Label stepLabel = new Label();
     final Label fileLabel = new Label();
-    boolean isDownloading = false;
 
     @Override
     public String getName() {
@@ -92,7 +94,7 @@ public class Home extends ContentPanel {
     }
 
     private void play() {
-        isDownloading = true;
+        isDownloadingOrPlaying = true;
         boxPane.getChildren().clear();
         setProgress(0, 0);
         boxPane.getChildren().addAll(progressBar, stepLabel, fileLabel);
@@ -109,8 +111,11 @@ public class Home extends ContentPanel {
             @Override
             public void step(Step step) {
                 Platform.runLater(() -> {
-                    stepTxt = StepInfo.valueOf(step.name()).getDetails();
-                    setStatus(String.format("%s (%s)", stepTxt, percentTxt));
+                    StepInfo stepInfo = StepInfo.valueOf(step.name());
+                    stepTxt = stepInfo.getDetails();
+                    if(stepInfo == StepInfo.END) setStatus(String.format("%s", stepTxt));
+                    else if(Objects.equals(percentTxt, "100%")) setStatus(String.format("%s", StepInfo.END.getDetails()));
+                    else setStatus(String.format("%s (%s)", stepTxt, percentTxt));
                 });
             }
 
@@ -171,14 +176,7 @@ public class Home extends ContentPanel {
                     MinecraftInfos.MODLOADER_VERSION.split("-").length >= 2 ? MinecraftInfos.MODLOADER_VERSION.split("-")[1] : MinecraftInfos.MODLOADER_VERSION,
                     MinecraftInfos.MODLOADER);
 
-            Platform.runLater(() -> {
-                try {
-                    p.waitFor();
-                    Platform.exit();
-                } catch (InterruptedException e) {
-                    Launcher.getInstance().getLogger().printStackTrace(e);
-                }
-            });
+            new Thread(() -> checkStopped(p)).start();
         } catch (Exception e) {
             Launcher.getInstance().getLogger().printStackTrace(e);
             JOptionPane.showMessageDialog(
@@ -187,6 +185,15 @@ public class Home extends ContentPanel {
                     "Erreur",
                     JOptionPane.ERROR_MESSAGE
             );
+        }
+    }
+
+    public void checkStopped(Process p) {
+        try {
+            p.waitFor();
+            isDownloadingOrPlaying = false;
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -214,10 +221,11 @@ public class Home extends ContentPanel {
         this.progressBar.setProgress(current / max);
     }
 
-    public boolean isDownloading() {
-        return isDownloading;
+    public boolean isDownloadingOrPlaying() {
+        return isDownloadingOrPlaying;
     }
 
+    @SuppressWarnings("unused")
     public enum StepInfo {
         READ("Lecture du fichier json..."),
         DL_LIBS("Téléchargement des libraries..."),
@@ -230,7 +238,7 @@ public class Home extends ContentPanel {
         POST_EXECUTIONS("Exécution post-installation..."),
         MOD_LOADER("Installation du mod loader..."),
         INTEGRATION("Intégration des mods..."),
-        END("Fini !");
+        END("Terminé ! Lancement du jeu en cours...");
 
         final String details;
 

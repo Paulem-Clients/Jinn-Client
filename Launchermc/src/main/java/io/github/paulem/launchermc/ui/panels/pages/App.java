@@ -154,7 +154,7 @@ public class App extends Panel {
             logoutBtn.getStyleClass().add("logout-btn");
             logoutBtn.setGraphic(logoutIcon);
             logoutBtn.setOnMouseClicked(e -> {
-                if (currentPage instanceof Home && ((Home) currentPage).isDownloading()) {
+                if (currentPage instanceof Home && ((Home) currentPage).isDownloadingOrPlaying()) {
                     return;
                 }
                 saver.remove("accessToken");
@@ -179,7 +179,7 @@ public class App extends Panel {
     }
 
     public void setPage(ContentPanel panel, Node navButton) {
-        if (currentPage instanceof Home && ((Home) currentPage).isDownloading()) {
+        if (currentPage instanceof Home && ((Home) currentPage).isDownloadingOrPlaying()) {
             return;
         }
         if (activeLink != null)
