@@ -192,6 +192,7 @@ public class Home extends ContentPanel {
         try {
             p.waitFor();
             isDownloadingOrPlaying = false;
+            Platform.runLater(this::showPlayButton);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
