@@ -28,7 +28,7 @@ public class MinecraftInfos {
             .build();
     */
 
-    public static final String GAME_VERSION = "1.21-rc1";
+    public static final String GAME_VERSION = "1.21";
     //public static final ForgeVersionType FORGE_VERSION_TYPE = ForgeVersionType.NEW;
     public static final NoFramework.ModLoader MODLOADER = NoFramework.ModLoader.FABRIC;
     public static final String MODLOADER_VERSION = "0.15.11";
