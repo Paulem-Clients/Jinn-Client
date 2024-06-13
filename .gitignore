@@ -1,11 +1,6 @@
 .idea
 .git
-Launchermc/.git
-Launchermc/.gradle
-Launchermc/.idea
-Launchermc/build
-LauncherUpdater/.gradle
-LauncherUpdater/.idea
-LauncherUpdater/build
+.gradle
+build
 Setup
 installer.log
