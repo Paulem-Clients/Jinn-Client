@@ -1,6 +1,5 @@
 package io.github.paulem.launchermc.game;
 
-import fr.flowarg.flowupdater.download.json.Mod;
 import fr.flowarg.flowupdater.utils.ModFileDeleter;
 import fr.flowarg.flowupdater.versions.FabricVersion;
 import fr.flowarg.openlauncherlib.NoFramework;
@@ -15,7 +14,8 @@ public class MinecraftInfos {
     // ----- POUR FABRIC -----
     public static final FabricVersion GAME = new FabricVersion.FabricVersionBuilder()
             //.withFabricVersion(MinecraftInfos.MODLOADER_VERSION)
-            .withMods(Mod.getModsFromJson(MinecraftInfos.MODS_LIST_URL))
+            .withMods(MinecraftInfos.MODS_LIST_URL)
+            .withCurseMods(MinecraftInfos.MODS_LIST_URL)
             .withFileDeleter(new ModFileDeleter(true))
             .build();
 
