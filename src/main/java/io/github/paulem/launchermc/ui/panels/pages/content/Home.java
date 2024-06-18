@@ -9,6 +9,7 @@ import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
 import fr.flowarg.openlauncherlib.NoFramework;
 import io.github.paulem.launchermc.Launcher;
+import io.github.paulem.launchermc.game.MinecraftVersion;
 import io.github.paulem.launchermc.game.MinecraftInfos;
 import io.github.paulem.launchermc.ui.PanelManager;
 import fr.theshark34.openlauncherlib.minecraft.GameFolder;
@@ -145,12 +146,12 @@ public class Home extends ContentPanel {
         try {
             final VanillaVersion vanillaVersion = new VanillaVersion.VanillaVersionBuilder()
                     .withName(MinecraftInfos.GAME_VERSION)
-                    .withSnapshot(true)
+                    .withSnapshot(false)
                     .build();
 
             final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
                     .withVanillaVersion(vanillaVersion)
-                    .withModLoaderVersion(MinecraftInfos.GAME)
+                    .withModLoaderVersion(MinecraftVersion.GAME)
                     .withLogger(Launcher.getInstance().getLogger())
                     .withProgressCallback(callback)
                     .build();
@@ -159,7 +160,13 @@ public class Home extends ContentPanel {
             this.startGame(updater.getVanillaVersion().getName());
         } catch (Exception e) {
             Launcher.getInstance().getLogger().printStackTrace(e);
-            Platform.runLater(() -> this.panelManager.getStage().show());
+            Launcher.getInstance().getLogger().info("Lancement en mode hors-ligne...");
+            Platform.runLater(() -> {
+                setProgress(1, 1);
+                setStatus(String.format("%s", StepInfo.OFFLINE.getDetails()));
+            });
+            this.startGame(MinecraftInfos.GAME_VERSION);
+            //Platform.runLater(() -> this.panelManager.getStage().show());
         }
     }
 
@@ -239,7 +246,8 @@ public class Home extends ContentPanel {
         POST_EXECUTIONS("Exécution post-installation..."),
         MOD_LOADER("Installation du mod loader..."),
         INTEGRATION("Intégration des mods..."),
-        END("Terminé ! Lancement du jeu en cours...");
+        END("Terminé ! Lancement du jeu en cours..."),
+        OFFLINE("Lancement du jeu en mode hors-ligne...");
 
         final String details;
 
