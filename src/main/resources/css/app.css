@@ -7,7 +7,6 @@
 }
 
 .bg-image {
-    -fx-background-image: url("/images/background.png");
     -fx-background-position: center center;
     -fx-background-repeat: stretch;
 }

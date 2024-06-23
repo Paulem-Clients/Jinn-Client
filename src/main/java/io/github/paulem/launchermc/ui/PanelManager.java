@@ -2,9 +2,12 @@ package io.github.paulem.launchermc.ui;
 
 import io.github.paulem.launchermc.Launcher;
 import io.github.paulem.launchermc.ui.panel.IPanel;
+import io.github.paulem.launchermc.ui.panel.Panel;
+import io.github.paulem.launchermc.ui.panels.pages.content.Settings;
 import io.github.paulem.launchermc.ui.panels.partials.TopBar;
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import fr.flowarg.flowcompat.Platform;
+import io.github.paulem.launchermc.utils.Background;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -13,6 +16,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PanelManager {
     private final Launcher launcher;
@@ -72,9 +78,18 @@ public class PanelManager {
         if (panel.getStylesheetPath() != null) {
             this.stage.getScene().getStylesheets().clear();
             this.stage.getScene().getStylesheets().add(panel.getStylesheetPath());
+            setBackground(this.stage.getScene(), null);
         }
         panel.init(this);
         panel.onShow();
+    }
+
+    public static void setBackground(Scene scene, @Nullable Panel actualPanel) {
+        if(actualPanel instanceof Settings) return;
+        int index = ThreadLocalRandom.current().nextInt(Background.values().length);
+        Background background = Background.values()[index];
+        String sessionBackground = "css/backgrounds/" + background.getName() + ".css";
+        scene.getStylesheets().add(sessionBackground);
     }
 
     public Stage getStage() {

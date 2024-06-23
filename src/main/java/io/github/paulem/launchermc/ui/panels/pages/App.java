@@ -197,6 +197,7 @@ public class App extends Panel {
                         this.getStylesheetPath(),
                         panel.getStylesheetPath()
                 );
+                PanelManager.setBackground(this.panelManager.getStage().getScene(), panel);
             }
             panel.init(this.panelManager);
             panel.onShow();
