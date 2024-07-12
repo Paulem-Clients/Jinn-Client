@@ -22,7 +22,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
-public class App extends Panel {
+public class SideBar extends Panel {
     final GridPane sidemenu = new GridPane();
     final GridPane navContent = new GridPane();
 

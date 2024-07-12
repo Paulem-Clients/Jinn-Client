@@ -169,7 +169,7 @@ public class Login extends Panel {
 
         this.logger.info("Hello " + infos.getUsername());
 
-        panelManager.showPanel(new App());
+        panelManager.showPanel(new SideBar());
     }
 
     public void authenticateMS() {
@@ -201,7 +201,7 @@ public class Login extends Panel {
 
             Launcher.getInstance().getLogger().info("Hello " + response.getProfile().getName());
 
-            Platform.runLater(() -> panelManager.showPanel(new App()));
+            Platform.runLater(() -> panelManager.showPanel(new SideBar()));
         });
     }
 }

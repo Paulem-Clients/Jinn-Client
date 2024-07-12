@@ -6,7 +6,7 @@ import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import io.github.paulem.launchermc.ui.PanelManager;
-import io.github.paulem.launchermc.ui.panels.pages.App;
+import io.github.paulem.launchermc.ui.panels.pages.SideBar;
 import io.github.paulem.launchermc.ui.panels.pages.Login;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
@@ -61,7 +61,7 @@ public class Launcher extends Application {
         if (this.isUserAlreadyLoggedIn()) {
             logger.info("Salut " + authInfos.getUsername() + " !");
 
-            this.panelManager.showPanel(new App());
+            this.panelManager.showPanel(new SideBar());
         } else {
             this.panelManager.showPanel(new Login());
         }

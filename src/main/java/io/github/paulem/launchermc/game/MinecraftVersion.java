@@ -1,6 +1,5 @@
 package io.github.paulem.launchermc.game;
 
-import fr.flowarg.flowupdater.utils.ModFileDeleter;
 import fr.flowarg.flowupdater.versions.FabricVersion;
 
 public class MinecraftVersion {
@@ -11,12 +10,7 @@ public class MinecraftVersion {
             .build();*/
 
     // ----- POUR FABRIC -----
-    public static final FabricVersion GAME = new FabricVersion.FabricVersionBuilder()
-            //.withFabricVersion(MinecraftInfos.MODLOADER_VERSION)
-            .withMods(MinecraftInfos.MODS_LIST_URL)
-            .withCurseMods(MinecraftInfos.MODS_LIST_URL)
-            .withFileDeleter(new ModFileDeleter(true))
-            .build();
+    public static FabricVersion GAME;
 
 
     /* ----- POUR FORGE -----

@@ -1,6 +1,8 @@
 package io.github.paulem.launchermc.utils;
 
 public enum Background {
+    VOLCANIC("volcanic"),
+    SPAWN("spawn"),
     FOREST("forest"),
     CAVE("cave"),
     WATER_TEMPLE("water_temple"),

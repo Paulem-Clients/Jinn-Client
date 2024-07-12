@@ -8,7 +8,7 @@ plugins {
 apply plugin: 'org.openjfx.javafxplugin'
 
 group 'io.github.paulem.launchermc'
-version '1.0'
+version '1.0.2'
 
 repositories {
     mavenCentral()
@@ -31,6 +31,7 @@ dependencies {
 
     implementation 'com.github.goxr3plus:FX-BorderlessScene:4+'
     implementation 'com.github.oshi:oshi-core:6+'
+    implementation 'org.apache.maven:maven-artifact:3.6.3'
 }
 
 jar {
@@ -46,6 +47,7 @@ application {
 }
 
 javafx {
+    version = "21.0.3"
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing']
 }
 

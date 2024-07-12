@@ -86,8 +86,11 @@ public class PanelManager {
 
     public static void setBackground(Scene scene, @Nullable Panel actualPanel) {
         if(actualPanel instanceof Settings) return;
-        int index = ThreadLocalRandom.current().nextInt(Background.values().length);
-        Background background = Background.values()[index];
+
+        Background[] backgroundsValues = Background.values();
+        int index = ThreadLocalRandom.current().nextInt(backgroundsValues.length);
+        Background background = backgroundsValues[index];
+
         String sessionBackground = "css/backgrounds/" + background.getName() + ".css";
         scene.getStylesheets().add(sessionBackground);
     }
