@@ -1,9 +1,9 @@
 .app-layout {
-    -fx-background: rgb(10, 12, 12);
+    -fx-background-color: rgb(24, 24, 24);
 }
 
 .sidemenu {
-    -fx-background-color: white;
+    -fx-background-color: rgb(24, 24, 24);
 }
 
 .bg-image {
@@ -12,7 +12,7 @@
 }
 
 .home-title {
-    -fx-text-fill: rgb(20, 25, 25);
+    -fx-text-fill: rgb(255, 255, 255);
 }
 
 .sidemenu-nav-btn {
@@ -20,6 +20,7 @@
     -fx-background-color: transparent;
     -fx-font-size: 20px;
     -fx-text-alignment: left;
+    -fx-text-fill: rgb(255, 255, 255);
     -fx-min-height: 40px;
     -fx-max-height: 40px;
     -fx-max-width: 350px;
@@ -31,19 +32,24 @@
 }
 
 .sidemenu-nav-btn:hover {
-    -fx-background-color: rgb(157, 157, 157, 0.3);
+    -fx-background-color: rgb(65, 65, 65);
 }
 
 .sidemenu-nav-btn.active {
-    -fx-border-color: #330085;
+    -fx-border-color: rgb(48, 48, 48);
+    -fx-background-color: rgb(80, 80, 80);
 }
 
-.nav-content {
-    -fx-background-color: rgba(240, 240, 240, 0.4);
+.sidemenu-nav-btn-icon {
+    -fx-fill: rgb(200, 200, 200);
 }
 
 .user-pane {
-    -fx-background-color: #330085;
+    -fx-background-color: rgb(48, 48, 48);
+}
+
+.user-pane .username-label {
+    -fx-text-fill: rgb(255, 255, 255);
 }
 
 .logout-btn {
@@ -56,9 +62,5 @@
 }
 
 .logout-icon {
-    -fx-fill: white;
-}
-
-.logout-btn:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-fill: rgb(246, 55, 55);
 }

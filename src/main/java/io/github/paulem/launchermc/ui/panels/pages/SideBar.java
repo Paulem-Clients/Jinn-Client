@@ -9,6 +9,7 @@ import io.github.paulem.launchermc.ui.panels.pages.content.ContentPanel;
 import io.github.paulem.launchermc.ui.panels.pages.content.Home;
 import io.github.paulem.launchermc.ui.panels.pages.content.Settings;
 import fr.theshark34.openlauncherlib.util.Saver;
+import io.github.paulem.launchermc.utils.Constants;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -40,7 +41,7 @@ public class SideBar extends Panel {
 
     @Override
     public String getStylesheetPath() {
-        return "css/app.css";
+        return "css/sidebar.css";
     }
 
     @Override
@@ -88,13 +89,16 @@ public class SideBar extends Panel {
         setCanTakeAllSize(title);
         setTop(title);
         title.setTextAlignment(TextAlignment.CENTER);
-        title.setTranslateY(30d);
+        title.setTranslateY(Constants.TITLE_OFFSET_Y);
         sidemenu.getChildren().add(title);
 
         // Navigation
         homeBtn = new Button("Accueil");
         homeBtn.getStyleClass().add("sidemenu-nav-btn");
-        homeBtn.setGraphic(new MaterialDesignIconView<>(MaterialDesignIcon.H.HOME));
+        final var homeIcon = new MaterialDesignIconView<>(MaterialDesignIcon.H.HOME);
+        homeIcon.getStyleClass().add("sidemenu-nav-btn-icon");
+        homeIcon.setTranslateY(Constants.NAVBUTTON_OFFSET_Y);
+        homeBtn.setGraphic(homeIcon);
         setCanTakeAllSize(homeBtn);
         setTop(homeBtn);
         homeBtn.setTranslateY(90d);
@@ -102,7 +106,10 @@ public class SideBar extends Panel {
 
         settingsBtn = new Button("Paramètres");
         settingsBtn.getStyleClass().add("sidemenu-nav-btn");
-        settingsBtn.setGraphic(new MaterialDesignIconView<>(MaterialDesignIcon.C.COG));
+        final var settingsIcon = new MaterialDesignIconView<>(MaterialDesignIcon.C.COG);
+        settingsIcon.getStyleClass().add("sidemenu-nav-btn-icon");
+        settingsIcon.setTranslateY(Constants.NAVBUTTON_OFFSET_Y);
+        settingsBtn.setGraphic(settingsIcon);
         setCanTakeAllSize(settingsBtn);
         setTop(settingsBtn);
         settingsBtn.setTranslateY(130d);

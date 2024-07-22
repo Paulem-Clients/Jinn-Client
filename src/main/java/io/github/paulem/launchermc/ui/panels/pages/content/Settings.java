@@ -78,7 +78,7 @@ public class Settings extends ContentPanel {
         ComboBox<String> comboBox = new ComboBox<>();
         comboBox.getStyleClass().add("ram-selector");
         for(int i = 512; i <= Math.ceil(memory.getTotal() / Math.pow(1024, 2)); i+=512) {
-            comboBox.getItems().add(i/1024.0+" GB");
+            comboBox.getItems().add(i/1024.0 + " GB");
         }
 
         int val = 1024;
@@ -112,8 +112,9 @@ public class Settings extends ContentPanel {
         Button saveBtn = new Button("Enregistrer");
         saveBtn.getStyleClass().add("save-btn");
         final var iconView = new MaterialDesignIconView<>(MaterialDesignIcon.F.FLOPPY);
-        final var iconCheck = new MaterialDesignIconView<>(MaterialDesignIcon.C.CHECK);
         iconView.getStyleClass().add("save-icon");
+        final var iconCheck = new MaterialDesignIconView<>(MaterialDesignIcon.C.CHECK);
+        iconCheck.getStyleClass().add("save-icon");
         saveBtn.setGraphic(iconView);
         setCanTakeAllSize(saveBtn);
         setBottom(saveBtn);

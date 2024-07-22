@@ -6,6 +6,7 @@ import io.github.paulem.launchermc.ui.PanelManager;
 import io.github.paulem.launchermc.ui.panel.Panel;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
+import io.github.paulem.launchermc.utils.Constants;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
@@ -79,10 +80,10 @@ public class Login extends Panel {
         setCanTakeAllSize(title);
         setTop(title);
         title.setTextAlignment(TextAlignment.CENTER);
-        title.setTranslateY(30d);
+        title.setTranslateY(Constants.TITLE_OFFSET_Y);
         loginCard.getChildren().add(title);
 
-        // Username/E-Mail
+        // Username
         setCanTakeAllSize(userField);
         setCenterV(userField);
         setCenterH(userField);
@@ -97,7 +98,7 @@ public class Login extends Panel {
         setCenterV(userErrorLabel);
         setCenterH(userErrorLabel);
         userErrorLabel.getStyleClass().add("login-error");
-        userErrorLabel.setTranslateY(-45d);
+        userErrorLabel.setTranslateY(-35d);
         userErrorLabel.setMaxWidth(280);
         userErrorLabel.setTextAlignment(TextAlignment.LEFT);
 
@@ -120,7 +121,7 @@ public class Login extends Panel {
         separator.setTranslateY(40d);
 
         // Login with label
-        Label loginWithLabel = new Label("Ou se connecter avec:".toUpperCase());
+        Label loginWithLabel = new Label("Ou se connecter avec :".toUpperCase());
         setCanTakeAllSize(loginWithLabel);
         setCenterV(loginWithLabel);
         setCenterH(loginWithLabel);

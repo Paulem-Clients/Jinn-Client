@@ -23,26 +23,8 @@ public class TopBar extends Panel {
     @Override
     public void init(PanelManager panelManager) {
         super.init(panelManager);
-        this.layout.setStyle("-fx-background-color: rgb(35, 40, 40);");
+        this.layout.setStyle("-fx-background-color: rgb(24, 24, 24);");
         setCanTakeAllWidth(this.layout);
-
-        /*
-         * TopBar separation
-         */
-        // TopBar: left side
-        ImageView imageView = new ImageView();
-        imageView.setImage(new Image("images/icon.png"));
-        imageView.setPreserveRatio(true);
-        imageView.setFitHeight(25);
-        setLeft(imageView);
-        this.layout.getChildren().add(imageView);
-
-        // TopBar: center
-        Label title = new Label("Launcher MC");
-        title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 18f));
-        title.setStyle("-fx-text-fill: white;");
-        setCenterH(title);
-        this.layout.getChildren().add(title);
 
         // TopBar: right side
         GridPane topBarButton = new GridPane();
@@ -67,6 +49,7 @@ public class TopBar extends Panel {
         closeBtn.setOnMouseExited(e -> closeBtn.setOpacity(.7f));
         closeBtn.setOnMouseClicked(e -> System.exit(0));
         closeBtn.setTranslateX(70f);
+        closeBtn.setTranslateY(4f);
 
         fullscreenBtn.setFill(Color.WHITE);
         fullscreenBtn.setOpacity(0.70f);
@@ -75,6 +58,7 @@ public class TopBar extends Panel {
         fullscreenBtn.setOnMouseExited(e -> fullscreenBtn.setOpacity(0.7f));
         fullscreenBtn.setOnMouseClicked(e -> this.panelManager.getStage().setMaximized(!this.panelManager.getStage().isMaximized()));
         fullscreenBtn.setTranslateX(50.0d);
+        fullscreenBtn.setTranslateY(4f);
 
         minimizeBtn.setFill(Color.WHITE);
         minimizeBtn.setOpacity(0.70f);
@@ -83,6 +67,7 @@ public class TopBar extends Panel {
         minimizeBtn.setOnMouseExited(e -> minimizeBtn.setOpacity(0.7f));
         minimizeBtn.setOnMouseClicked(e -> this.panelManager.getStage().setIconified(true));
         minimizeBtn.setTranslateX(26.0d);
+        minimizeBtn.setTranslateY(4f);
 
         topBarButton.getChildren().addAll(closeBtn, fullscreenBtn, minimizeBtn);
     }
