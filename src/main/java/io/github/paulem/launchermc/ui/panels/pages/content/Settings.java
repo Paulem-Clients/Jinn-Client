@@ -1,10 +1,12 @@
 package io.github.paulem.launchermc.ui.panels.pages.content;
 
+import com.sun.management.OperatingSystemMXBean;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
 import io.github.paulem.launchermc.Launcher;
 import io.github.paulem.launchermc.ui.PanelManager;
 import fr.theshark34.openlauncherlib.util.Saver;
+import io.github.paulem.launchermc.utils.Constants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -17,8 +19,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import oshi.SystemInfo;
-import oshi.hardware.GlobalMemory;
+
+import java.lang.management.ManagementFactory;
 
 public class Settings extends ContentPanel {
     private final Saver saver = Launcher.getInstance().getSaver();
@@ -71,30 +73,32 @@ public class Settings extends ContentPanel {
         ramLabel.setTranslateY(100d);
         contentPane.getChildren().add(ramLabel);
 
-        // RAM Slider
-        SystemInfo systemInfo = new SystemInfo();
-        GlobalMemory memory = systemInfo.getHardware().getMemory();
+        // RAM Chooser
 
         ComboBox<String> comboBox = new ComboBox<>();
         comboBox.getStyleClass().add("ram-selector");
-        for(int i = 512; i <= Math.ceil(memory.getTotal() / Math.pow(1024, 2)); i+=512) {
+
+        long totalMemorySize = ((OperatingSystemMXBean) ManagementFactory
+                .getOperatingSystemMXBean()).getTotalMemorySize();
+        for(int i = 512; i <= Math.ceil(totalMemorySize / Math.pow(1024, 2)); i+=512) {
             comboBox.getItems().add(i/1024.0 + " GB");
         }
 
-        int val = 1024;
+        int defaultRamAmount = 1024;
+        String maxRam = saver.get(Constants.CONFIG_MAXRAM);
         try {
-            if (saver.get("maxRam") != null) {
-                val = Integer.parseInt(saver.get("maxRam"));
+            if (maxRam != null) {
+                defaultRamAmount = Integer.parseInt(maxRam);
             } else {
-                throw new NumberFormatException();
+                throw new NumberFormatException("maxRam doesn't exist !");
             }
         } catch (NumberFormatException error) {
-            saver.set("maxRam", String.valueOf(val));
+            saver.set(Constants.CONFIG_MAXRAM, String.valueOf(defaultRamAmount));
             saver.save();
         }
 
-        if (comboBox.getItems().contains(val/1024.0+" GB")) {
-            comboBox.setValue(val / 1024.0 + " GB");
+        if (comboBox.getItems().contains(defaultRamAmount/1024.0+" GB")) {
+            comboBox.setValue(defaultRamAmount / 1024.0 + " GB");
         } else {
             comboBox.setValue("1.0 GB");
         }
@@ -120,11 +124,13 @@ public class Settings extends ContentPanel {
         setBottom(saveBtn);
         setCenterH(saveBtn);
         saveBtn.setOnMouseClicked(e -> {
-            double _val = Double.parseDouble(comboBox.getValue().replace(" GB", ""));
-            _val *= 1024;
-            saver.set("maxRam", String.valueOf((int) _val));
+            double comboBoxRamValue = Double.parseDouble(comboBox.getValue().replace(" GB", ""));
+            comboBoxRamValue *= 1024;
+            saver.set(Constants.CONFIG_MAXRAM, String.valueOf((int) comboBoxRamValue));
+            
             saveBtn.setGraphic(iconCheck);
             saveBtn.setText("Enregistré");
+            
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(4), event -> {
                 saveBtn.setGraphic(iconView);
                 saveBtn.setText("Enregistrer");

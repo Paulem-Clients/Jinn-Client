@@ -185,7 +185,7 @@ public class Home extends ContentPanel {
                 ComparableVersion latestVersion = getComparableVersion(fabricloaderFiles);
 
                 List<File> filesToRemove = fabricloaderFiles.stream()
-                        .filter(file -> new ComparableVersion(getVersionFabricLoader(file.getName())).compareTo(latestVersion) != 0)
+                        .filter(file -> latestVersion != null && new ComparableVersion(getVersionFabricLoader(file.getName())).compareTo(latestVersion) != 0)
                         .toList();
 
                 for(File file : filesToRemove) {
@@ -206,7 +206,6 @@ public class Home extends ContentPanel {
                 setStatus(String.format("%s", StepInfo.OFFLINE.getDetails()));
             });
             this.startGame(MinecraftInfos.GAME_VERSION);
-            //Platform.runLater(() -> this.panelManager.getStage().show());
         }
     }
 

@@ -131,7 +131,7 @@ public class Login extends Panel {
         loginWithLabel.setMaxWidth(280d);
 
         // Microsoft login button
-        ImageView view = new ImageView(new Image("images/microsoft.png"));
+        ImageView view = new ImageView(new Image("images/assets/microsoft.png"));
         view.setPreserveRatio(true);
         view.setFitHeight(30d);
         setCanTakeAllSize(msLoginBtn);
