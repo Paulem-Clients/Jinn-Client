@@ -14,6 +14,7 @@ public class Constants {
     public static final String RPC_UPDATE = "Télécharge les fichiers";
     public static final String RPC_CONNECTED = "En jeu";
     public static final String RPC_LARGE_IMG_KEY = "icon";
-    public static final String RPC_STATE = "Joueurs";
+    public static final String RPC_STATE_PLAYERS = "Joueurs";
+    public static final String RPC_STATE_NO_PLAYERS = "Pas de joueur connecté";
     public static final String RPC_PARTY_ID = UUID.randomUUID().toString();
 }

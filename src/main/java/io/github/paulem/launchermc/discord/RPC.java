@@ -48,9 +48,9 @@ public final class RPC {
 
     public void editPresence(String details) {
         if(isConnected(details)) {
-            updateServerInfos();
-            presence.state = Constants.RPC_STATE;
             presence.partyId = Constants.RPC_PARTY_ID;
+            presence.state = Constants.RPC_STATE_PLAYERS;
+            updateServerInfos();
         } else {
             defaultPresence();
         }
@@ -68,8 +68,15 @@ public final class RPC {
         try {
             MinetoolsServer server = GsonUtils.parseJson(MinetoolsServer.class);
 
-            presence.partySize = server.players().online();
+            int onlinePlayers = server.players().online();
+
+            if(onlinePlayers == 0) {
+                presence.state = Constants.RPC_STATE_NO_PLAYERS;
+            }
+
+            presence.partySize = onlinePlayers;
             presence.partyMax = server.players().max();
+
             presence.largeImageText = server.description();
 
             lib.Discord_UpdatePresence(presence);
