@@ -8,7 +8,7 @@ plugins {
 apply(plugin = "org.openjfx.javafxplugin")
 
 group = "io.github.paulem.launchermc"
-version = "1.0.6"
+version = "1.0.6.1"
 
 repositories {
     mavenCentral()

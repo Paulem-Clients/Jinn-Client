@@ -49,7 +49,6 @@ public final class RPC {
     public void editPresence(String details) {
         if(isConnected(details)) {
             presence.partyId = Constants.RPC_PARTY_ID;
-            presence.state = Constants.RPC_STATE_PLAYERS;
             updateServerInfos();
         } else {
             defaultPresence();
@@ -72,7 +71,7 @@ public final class RPC {
 
             if(onlinePlayers == 0) {
                 presence.state = Constants.RPC_STATE_NO_PLAYERS;
-            }
+            } else presence.state = Constants.RPC_STATE_PLAYERS;
 
             presence.partySize = onlinePlayers;
             presence.partyMax = server.players().max();
