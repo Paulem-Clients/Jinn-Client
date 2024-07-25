@@ -1,7 +1,6 @@
-package io.github.paulem.launchermc.ui;
+package io.github.paulem.launchermc.ui.panels;
 
 import io.github.paulem.launchermc.Launcher;
-import io.github.paulem.launchermc.ui.panel.Panel;
 import io.github.paulem.launchermc.ui.panels.pages.content.Settings;
 import io.github.paulem.launchermc.utils.Background;
 import javafx.scene.Scene;

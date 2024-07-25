@@ -1,7 +1,7 @@
-package io.github.paulem.launchermc.ui.panel;
+package io.github.paulem.launchermc.ui.panels;
 
+import fr.theshark34.openlauncherlib.util.Saver;
 import io.github.paulem.launchermc.Launcher;
-import io.github.paulem.launchermc.ui.PanelManager;
 import fr.flowarg.flowlogger.ILogger;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
 public abstract class Panel {
+    protected final Saver saver = Launcher.getInstance().getSaver();
     protected final ILogger logger;
     protected final GridPane layout = new GridPane();
     protected PanelManager panelManager;

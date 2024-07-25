@@ -1,13 +1,10 @@
 package io.github.paulem.launchermc.ui.panels.pages;
 
-import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import io.github.paulem.launchermc.Launcher;
-import io.github.paulem.launchermc.ui.PanelManager;
-import io.github.paulem.launchermc.ui.panel.Panel;
-import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
-import fr.theshark34.openlauncherlib.util.Saver;
+import io.github.paulem.launchermc.game.Authentification;
+import io.github.paulem.launchermc.ui.panels.PanelManager;
+import io.github.paulem.launchermc.ui.panels.Panel;
 import io.github.paulem.launchermc.utils.Constants;
-import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -19,19 +16,19 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Login extends Panel {
-    final GridPane loginCard = new GridPane();
+    private Authentification authentification;
 
-    final Saver saver = Launcher.getInstance().getSaver();
-    final AtomicBoolean offlineAuth = new AtomicBoolean(false);
+    private final GridPane loginCard = new GridPane();
 
-    final TextField userField = new TextField();
-    final Label userErrorLabel = new Label();
-    final Button btnLogin = new Button("Connexion");
-    final Button msLoginBtn = new Button();
+    private final AtomicBoolean offlineAuth = new AtomicBoolean(false);
+
+    private final TextField userField = new TextField();
+    private final Label userErrorLabel = new Label();
+    private final Button btnLogin = new Button("Connexion");
+    private final Button msLoginBtn = new Button();
 
     @Override
     public String getName() {
@@ -46,6 +43,10 @@ public class Login extends Panel {
     @Override
     public void init(PanelManager panelManager) {
         super.init(panelManager);
+
+        this.authentification = new Authentification(panelManager, saver, offlineAuth, logger);
+
+        Launcher.getInstance().getDiscordRPC().editPresence(Constants.RPC_LOGIN);
 
         // Background
         this.layout.getStyleClass().add("login-layout");
@@ -110,7 +111,7 @@ public class Login extends Panel {
         btnLogin.setMaxWidth(300);
         //btnLogin.setTranslateY(20d);
         btnLogin.getStyleClass().add("login-log-btn");
-        btnLogin.setOnMouseClicked(e -> this.authenticate(userField.getText()));
+        btnLogin.setOnMouseClicked(e -> authentification.authenticate(userField.getText()));
 
         Separator separator = new Separator();
         setCanTakeAllSize(separator);
@@ -141,7 +142,7 @@ public class Login extends Panel {
         msLoginBtn.setMaxWidth(300);
         msLoginBtn.setTranslateY(95d);
         msLoginBtn.setGraphic(view);
-        msLoginBtn.setOnMouseClicked(e -> this.authenticateMS());
+        msLoginBtn.setOnMouseClicked(e -> authentification.authenticateMS());
 
         loginCard.getChildren().addAll(userField, userErrorLabel, btnLogin, separator, loginWithLabel, msLoginBtn);
     }
@@ -156,53 +157,5 @@ public class Login extends Panel {
         }
 
         btnLogin.setDisable(userField.getText().isEmpty());
-    }
-
-    public void authenticate(String user) {
-        AuthInfos infos = new AuthInfos(
-                user,
-                UUID.randomUUID().toString(),
-                UUID.randomUUID().toString()
-        );
-        saver.set("offline-username", infos.getUsername());
-        saver.save();
-        Launcher.getInstance().setAuthInfos(infos);
-
-        this.logger.info("Hello " + infos.getUsername());
-
-        panelManager.showPanel(new SideBar());
-    }
-
-    public void authenticateMS() {
-        offlineAuth.set(false);
-        MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();
-        authenticator.loginWithAsyncWebview().whenComplete((response, error) -> {
-            if (error != null) {
-                Launcher.getInstance().getLogger().err(error.toString());
-                Platform.runLater(()-> {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Erreur");
-                    alert.setContentText(error.getMessage());
-                    alert.show();
-                });
-
-                return;
-            }
-
-            saver.set("msAccessToken", response.getAccessToken());
-            saver.set("msRefreshToken", response.getRefreshToken());
-            saver.save();
-            Launcher.getInstance().setAuthInfos(new AuthInfos(
-                    response.getProfile().getName(),
-                    response.getAccessToken(),
-                    response.getProfile().getId(),
-                    response.getXuid(),
-                    response.getClientId()
-            ));
-
-            Launcher.getInstance().getLogger().info("Hello " + response.getProfile().getName());
-
-            Platform.runLater(() -> panelManager.showPanel(new SideBar()));
-        });
     }
 }

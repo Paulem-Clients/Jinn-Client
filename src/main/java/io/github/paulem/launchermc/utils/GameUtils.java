@@ -21,7 +21,7 @@ public class GameUtils {
     public static @NotNull Path createGameDir(String serverName, boolean inLinuxLocalShare)
     {
         try {
-            Path folderPath = getJarFile().getParent();
+            Path folderPath = getJarPath().getParent();
 
             final String os = Objects.requireNonNull(System.getProperty("os.name")).toLowerCase();
             if (os.contains("win")) return folderPath.resolve('.' + serverName);
@@ -36,7 +36,7 @@ public class GameUtils {
         }
     }
 
-    public static Path getJarFile() throws URISyntaxException {
+    public static Path getJarPath() throws URISyntaxException {
         return Paths.get(Main.class.getProtectionDomain().getCodeSource().getLocation()
                 .toURI());
     }

@@ -1,4 +1,4 @@
-package io.github.paulem.launchermc.game;
+package io.github.paulem.launchermc.game.minecraft;
 
 import fr.flowarg.flowupdater.versions.FabricVersion;
 

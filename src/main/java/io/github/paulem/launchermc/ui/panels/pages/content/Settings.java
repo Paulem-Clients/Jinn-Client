@@ -3,9 +3,7 @@ package io.github.paulem.launchermc.ui.panels.pages.content;
 import com.sun.management.OperatingSystemMXBean;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
-import io.github.paulem.launchermc.Launcher;
-import io.github.paulem.launchermc.ui.PanelManager;
-import fr.theshark34.openlauncherlib.util.Saver;
+import io.github.paulem.launchermc.ui.panels.PanelManager;
 import io.github.paulem.launchermc.utils.Constants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -23,9 +20,6 @@ import javafx.util.Duration;
 import java.lang.management.ManagementFactory;
 
 public class Settings extends ContentPanel {
-    private final Saver saver = Launcher.getInstance().getSaver();
-    final GridPane contentPane = new GridPane();
-
     @Override
     public String getName() {
         return "settings";
@@ -123,6 +117,7 @@ public class Settings extends ContentPanel {
         setCanTakeAllSize(saveBtn);
         setBottom(saveBtn);
         setCenterH(saveBtn);
+
         saveBtn.setOnMouseClicked(e -> {
             double comboBoxRamValue = Double.parseDouble(comboBox.getValue().replace(" GB", ""));
             comboBoxRamValue *= 1024;

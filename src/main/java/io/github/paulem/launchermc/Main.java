@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 
-public class Main {
+public final class Main {
     public static void main(String[] args) {
         try {
             Class.forName("javafx.application.Application");

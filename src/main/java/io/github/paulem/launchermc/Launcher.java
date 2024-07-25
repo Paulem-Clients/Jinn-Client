@@ -5,7 +5,8 @@ import fr.flowarg.flowlogger.Logger;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthResult;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticationException;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
-import io.github.paulem.launchermc.ui.PanelManager;
+import io.github.paulem.launchermc.discord.RPC;
+import io.github.paulem.launchermc.ui.panels.PanelManager;
 import io.github.paulem.launchermc.ui.panels.pages.SideBar;
 import io.github.paulem.launchermc.ui.panels.pages.Login;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
@@ -20,13 +21,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.UUID;
 
-public class Launcher extends Application {
+public final class Launcher extends Application {
     private static Launcher instance;
+
     private final ILogger logger;
     private final Path launcherDir = GameUtils.createGameDir("paulem-launcher", true);
     private final Saver saver;
     private PanelManager panelManager;
     private AuthInfos authInfos = null;
+
+    private final RPC discordRPC;
 
     public Launcher() {
         instance = this;
@@ -44,8 +48,11 @@ public class Launcher extends Application {
             }
         }
 
-        saver = new Saver(this.launcherDir.resolve("config.properties"));
-        saver.load();
+        this.saver = new Saver(this.launcherDir.resolve("config.properties"));
+        this.saver.load();
+
+        this.discordRPC = new RPC(this.logger);
+        this.discordRPC.startPresence();
     }
 
     public static Launcher getInstance() {
@@ -59,7 +66,7 @@ public class Launcher extends Application {
         this.panelManager.init();
 
         if (this.isUserAlreadyLoggedIn()) {
-            logger.info("Salut " + authInfos.getUsername() + " !");
+            this.logger.info("Salut " + authInfos.getUsername() + " !");
 
             this.panelManager.showPanel(new SideBar());
         } else {
@@ -115,6 +122,10 @@ public class Launcher extends Application {
 
     public Path getLauncherDir() {
         return launcherDir;
+    }
+
+    public RPC getDiscordRPC() {
+        return discordRPC;
     }
 
     @Override

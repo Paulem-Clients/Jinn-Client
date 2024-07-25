@@ -3,12 +3,11 @@ package io.github.paulem.launchermc.ui.panels.pages;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
 import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
 import io.github.paulem.launchermc.Launcher;
-import io.github.paulem.launchermc.ui.PanelManager;
-import io.github.paulem.launchermc.ui.panel.Panel;
+import io.github.paulem.launchermc.ui.panels.PanelManager;
+import io.github.paulem.launchermc.ui.panels.Panel;
 import io.github.paulem.launchermc.ui.panels.pages.content.ContentPanel;
 import io.github.paulem.launchermc.ui.panels.pages.content.Home;
 import io.github.paulem.launchermc.ui.panels.pages.content.Settings;
-import fr.theshark34.openlauncherlib.util.Saver;
 import io.github.paulem.launchermc.utils.Constants;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
@@ -24,15 +23,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
 public class SideBar extends Panel {
-    final GridPane sidemenu = new GridPane();
-    final GridPane navContent = new GridPane();
+    private final GridPane sidemenu = new GridPane();
+    private final GridPane navContent = new GridPane();
 
-    Node activeLink = null;
-    ContentPanel currentPage = null;
+    private Node activeLink = null;
+    private ContentPanel currentPage = null;
 
-    Button homeBtn, settingsBtn;
-
-    final Saver saver = Launcher.getInstance().getSaver();
+    private Button homeBtn, settingsBtn;
 
     @Override
     public String getName() {

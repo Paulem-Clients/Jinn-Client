@@ -8,10 +8,11 @@ plugins {
 apply plugin: 'org.openjfx.javafxplugin'
 
 group 'io.github.paulem.launchermc'
-version '1.0.4.2'
+version '1.0.5'
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         url = 'https://jitpack.io'
         name = 'JitPack'
@@ -19,6 +20,10 @@ repositories {
     maven {
         url = 'https://litarvan.github.io/maven'
         name = 'LitarvanMaven'
+    }
+    maven {
+        url "https://maven.scijava.org/content/repositories/public/"
+        name = 'ClubMinnced'
     }
 }
 
@@ -28,14 +33,14 @@ dependencies {
 
     implementation 'fr.flowarg:flowupdater:1+'
     implementation 'fr.flowarg:openlauncherlib:3+'
+
+    implementation 'club.minnced:java-discord-rpc:2.0.2'
+
+    implementation 'com.google.code.gson:gson:2.10'
 }
 
 jar {
     dependsOn shadowJar
-
-    manifest {
-        attributes('Version': JAVA_VERSION)
-    }
 }
 
 application {
