@@ -1,13 +1,16 @@
+import org.gradle.internal.jvm.Jvm
+import org.panteleyev.jpackage.ImageType
+import org.panteleyev.jpackage.JPackageTask
+
 plugins {
     id("idea")
-    id("io.github.goooler.shadow") version "8.+"
+    id("com.gradleup.shadow") version "8.+"
     id("java")
     id("application")
-    id("org.openjfx.javafxplugin") version "0.+"
+    id("org.panteleyev.jpackageplugin") version "1.6.0"
 }
-apply(plugin = "org.openjfx.javafxplugin")
 
-group = "io.github.paulem.launchermc"
+group = "ovh.paulem.launchermc"
 version = "1.0.7"
 
 repositories {
@@ -45,27 +48,130 @@ dependencies {
     implementation("org.jetbrains:annotations:24.+")
 }
 
-tasks.jar {
-    dependsOn(tasks.shadowJar)
-}
-
 application {
-    mainClass.set("io.github.paulem.launchermc.Main")
+    mainClass.set("ovh.paulem.launchermc.Main")
 }
 
-javafx {
-    version = "22.+"
-    modules("javafx.controls")
-}
-
-tasks.compileJava {
-    project.properties["JAVA_VERSION"].toString().also {
+tasks.withType<JavaCompile>().configureEach {
+    JavaVersion.VERSION_21.toString().also {
         sourceCompatibility = it
         targetCompatibility = it
     }
     options.encoding = "UTF-8"
 }
 
-tasks.test {
-    useJUnitPlatform()
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.BELLSOFT
+    }
+}
+
+tasks.withType<JPackageTask>().configureEach {
+    dependsOn(tasks.shadowJar)
+
+    appName = "FlowJsonCreator"
+    appVersion = project.version.toString()
+    vendor = "Paulem"
+    copyright = "Copyright (c) 2025 Paulem"
+    runtimeImage = Jvm.current().javaHome.toString()
+    destination = "dist"
+    input = "build/libs"
+    mainJar = tasks.shadowJar.get().archiveFileName.get()
+    mainClass = application.mainClass.get()
+    javaOptions = listOf("-Dfile.encoding=UTF-8", "--add-exports=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED")
+}
+
+var infra = ""
+tasks.register<JPackageTask>("zipjpackage") {
+    finalizedBy("zipPackage")
+
+    type = ImageType.APP_IMAGE
+
+    linux {
+        infra = "linux"
+    }
+
+    mac {
+        icon = "icons/icons.icns"
+        infra = "macos"
+    }
+
+    windows {
+        icon = "icons/icons.ico"
+
+        winConsole = true
+        infra = "windows"
+    }
+}
+
+tasks.register<Zip>("zipPackage") {
+    archiveFileName.set(infra + "-FlowJsonCreator-" + project.version + ".zip")
+    destinationDirectory.set(layout.projectDirectory.dir("dist"))
+
+    from(layout.projectDirectory.dir("dist/FlowJsonCreator"))
+}
+
+tasks.jpackage {
+    linux {
+        type = ImageType.DEB
+    }
+
+    mac {
+        icon = "icons/icons.icns"
+
+        type = ImageType.DMG
+    }
+
+    windows {
+        icon = "icons/icons.ico"
+
+        type = ImageType.MSI
+
+        winConsole = true
+        if(type == ImageType.EXE || type == ImageType.MSI) {
+            winMenu = true
+            winDirChooser = true
+            winPerUserInstall = true
+            winShortcut = true
+            winShortcutPrompt = true
+            // winUpdateUrl can be interesting for auto-updates
+        }
+    }
+}
+
+tasks.clean {
+    dependsOn("deleteDist")
+}
+
+tasks.jar {
+    finalizedBy(tasks.shadowJar)
+}
+
+tasks.shadowJar {
+    mustRunAfter(tasks.distZip)
+    mustRunAfter(tasks.distTar)
+    mustRunAfter(tasks.startScripts)
+
+    archiveVersion.set("")
+    archiveClassifier.set("")
+}
+
+tasks.register<Delete>("deleteDist") {
+    delete("dist")
+}
+
+tasks.register<JavaExec>("runShadowJar") {
+    val javaPath = Jvm.current().javaExecutable.toString()
+
+    group = "application"
+    description = "Builds and runs the shadow jar using the specified Java path"
+
+    dependsOn(tasks.shadowJar)
+
+    classpath = files(tasks.shadowJar.get().archiveFile)
+    setExecutable(javaPath)
+    jvmArgs("--add-exports=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED")
+
+    finalizedBy(tasks.clean)
 }
