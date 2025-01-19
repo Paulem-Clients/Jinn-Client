@@ -6,8 +6,8 @@ import fr.flowarg.flowupdater.download.DownloadList;
 import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.Step;
 import fr.flowarg.flowupdater.utils.ModFileDeleter;
-import fr.flowarg.flowupdater.versions.FabricVersion;
 import fr.flowarg.flowupdater.versions.VanillaVersion;
+import fr.flowarg.flowupdater.versions.fabric.FabricVersionBuilder;
 import fr.flowarg.openlauncherlib.NoFramework;
 import fr.theshark34.openlauncherlib.minecraft.GameFolder;
 import fr.theshark34.openlauncherlib.util.Saver;
@@ -21,15 +21,10 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
-import org.apache.maven.artifact.versioning.ComparableVersion;
-import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.io.File;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public record Launch(Home home, Saver saver, ILogger logger, GridPane boxPane, ProgressBar progressBar, Label stepLabel, Label fileLabel) {
@@ -85,7 +80,7 @@ public record Launch(Home home, Saver saver, ILogger logger, GridPane boxPane, P
         try {
             Launcher.getInstance().getDiscordRPC().editPresence(Constants.RPC_UPDATE);
 
-            MinecraftVersion.GAME = new FabricVersion.FabricVersionBuilder()
+            MinecraftVersion.GAME = new FabricVersionBuilder()
                     .withFabricVersion(MinecraftInfos.MODLOADER_VERSION)
                     .withMods(MinecraftInfos.MODS_LIST_URL)
                     .withCurseMods(MinecraftInfos.MODS_LIST_URL)
@@ -106,31 +101,6 @@ public record Launch(Home home, Saver saver, ILogger logger, GridPane boxPane, P
 
             updater.update(Launcher.getInstance().getLauncherDir());
 
-            // Remove old fabric loader
-            File launcherDir = Launcher.getInstance().getLauncherDir().toFile();
-            File[] launcherFiles = launcherDir.listFiles();
-
-            if(launcherDir.isDirectory() && launcherFiles != null) {
-                List<File> fabricloaderFiles = Arrays.stream(launcherFiles)
-                        // Check if it is a fabric-loader-version-MCVERSION.json
-                        .filter(file -> file.getName().startsWith("fabric-loader-") && file.getName().endsWith("-" + MinecraftInfos.GAME_VERSION + ".json"))
-                        .toList();
-
-                ComparableVersion latestVersion = getComparableVersion(fabricloaderFiles);
-
-                List<File> filesToRemove = fabricloaderFiles.stream()
-                        .filter(file -> latestVersion != null && new ComparableVersion(getVersionFabricLoader(file.getName())).compareTo(latestVersion) != 0)
-                        .toList();
-
-                for(File file : filesToRemove) {
-                    logger.info("Removing " + file.getName() +  "...");
-                    file.delete();
-                }
-
-                if(latestVersion == null) logger.err("Error finding latest version ! It's now automatic");
-                else logger.info("Latest found version : " + latestVersion);
-            }
-
             this.startGame(updater.getVanillaVersion().getName());
         } catch (Exception e) {
             this.logger.printStackTrace(e);
@@ -141,26 +111,6 @@ public record Launch(Home home, Saver saver, ILogger logger, GridPane boxPane, P
             });
             this.startGame(MinecraftInfos.GAME_VERSION);
         }
-    }
-
-    private @Nullable ComparableVersion getComparableVersion(List<File> fabricloaderFiles) {
-        @Nullable ComparableVersion latestVersion = null;
-        for(File file : fabricloaderFiles) {
-            String versionName = getVersionFabricLoader(file.getName());
-
-            ComparableVersion version = new ComparableVersion(versionName);
-
-            if(latestVersion == null) latestVersion = version;
-            else if(version.compareTo(latestVersion) > 0) latestVersion = version;
-        }
-
-        return latestVersion;
-    }
-
-    private String getVersionFabricLoader(String fileName){
-        return fileName
-                .replace("fabric-loader-", "")
-                .replace("-" + MinecraftInfos.GAME_VERSION + ".json", "");
     }
 
     private void startGame(String gameVersion) {

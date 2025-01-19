@@ -1,6 +1,6 @@
 package io.github.paulem.launchermc.game.minecraft;
 
-import fr.flowarg.flowupdater.versions.FabricVersion;
+import fr.flowarg.flowupdater.versions.fabric.FabricVersion;
 
 public class MinecraftVersion {
     /*public static final QuiltVersion GAME = new QuiltVersion.QuiltVersionBuilder()

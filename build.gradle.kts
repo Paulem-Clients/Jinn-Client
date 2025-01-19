@@ -8,7 +8,7 @@ plugins {
 apply(plugin = "org.openjfx.javafxplugin")
 
 group = "io.github.paulem.launchermc"
-version = "1.0.6.1"
+version = "1.0.7"
 
 repositories {
     mavenCentral()
@@ -26,19 +26,23 @@ repositories {
         url = uri("https://maven.scijava.org/content/repositories/public/")
         name = "ClubMinnced"
     }
+    maven {
+        name = "paulemReleases"
+        url = uri("https://maven.paulem.ovh/releases")
+    }
 }
 
 dependencies {
     implementation("fr.litarvan:openauth:1.+")
     implementation("fr.flowarg:materialdesignfontfx:7.+")
 
-    implementation("fr.flowarg:flowupdater:1+")
+    implementation("fr.flowarg:flowupdater:1.9.2")
     implementation("fr.flowarg:openlauncherlib:3+")
 
     implementation("club.minnced:java-discord-rpc:2.0.2")
 
-    implementation("com.google.code.gson:gson:2.10")
-    implementation("org.jetbrains:annotations:24.1.0")
+    implementation("com.google.code.gson:gson:2.+")
+    implementation("org.jetbrains:annotations:24.+")
 }
 
 tasks.jar {
