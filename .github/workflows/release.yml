@@ -3,7 +3,7 @@ name: "Publish"
 on:
   push:
     branches:
-      - "launcher"
+      - "main"
     paths-ignore:
       - "README.md"
 
