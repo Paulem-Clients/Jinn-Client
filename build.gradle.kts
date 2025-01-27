@@ -10,8 +10,8 @@ plugins {
     id("org.panteleyev.jpackageplugin") version "1.6.0"
 }
 
-group = "ovh.paulem.launchermc"
-version = "1.0.7"
+group = "ovh.paulem.jinnclient"
+version = "0.1"
 
 repositories {
     mavenCentral()
@@ -49,7 +49,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("ovh.paulem.launchermc.Main")
+    mainClass.set("$group.Main")
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -67,10 +67,12 @@ java {
     }
 }
 
+val jvmOpts = listOf("-Dfile.encoding=UTF-8", "--add-exports=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED", "--add-opens=javafx.graphics/javafx.scene.layout=ALL-UNNAMED")
+
 tasks.withType<JPackageTask>().configureEach {
     dependsOn(tasks.shadowJar)
 
-    appName = "FlowJsonCreator"
+    appName = rootProject.name
     appVersion = project.version.toString()
     vendor = "Paulem"
     copyright = "Copyright (c) 2025 Paulem"
@@ -79,7 +81,7 @@ tasks.withType<JPackageTask>().configureEach {
     input = "build/libs"
     mainJar = tasks.shadowJar.get().archiveFileName.get()
     mainClass = application.mainClass.get()
-    javaOptions = listOf("-Dfile.encoding=UTF-8", "--add-exports=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED")
+    javaOptions = jvmOpts
 }
 
 var infra = ""
@@ -106,10 +108,10 @@ tasks.register<JPackageTask>("zipjpackage") {
 }
 
 tasks.register<Zip>("zipPackage") {
-    archiveFileName.set(infra + "-FlowJsonCreator-" + project.version + ".zip")
+    archiveFileName.set(infra + "-" + rootProject.name + "-" + project.version + ".zip")
     destinationDirectory.set(layout.projectDirectory.dir("dist"))
 
-    from(layout.projectDirectory.dir("dist/FlowJsonCreator"))
+    from(layout.projectDirectory.dir("dist/" + rootProject.name))
 }
 
 tasks.jpackage {
@@ -171,7 +173,7 @@ tasks.register<JavaExec>("runShadowJar") {
 
     classpath = files(tasks.shadowJar.get().archiveFile)
     setExecutable(javaPath)
-    jvmArgs("--add-exports=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED")
+    jvmArgs(jvmOpts)
 
-    finalizedBy(tasks.clean)
+    //finalizedBy(tasks.clean)
 }
