@@ -45,7 +45,7 @@ dependencies {
     implementation("club.minnced:java-discord-rpc:2.0.2")
 
     implementation("com.google.code.gson:gson:2.+")
-    implementation("org.jetbrains:annotations:24.+")
+    implementation("org.jetbrains:annotations:26.+")
 }
 
 application {
