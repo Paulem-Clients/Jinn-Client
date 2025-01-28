@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "ovh.paulem.jinnclient"
-version = "0.1"
+version = "1.0"
 
 repositories {
     mavenCentral()
