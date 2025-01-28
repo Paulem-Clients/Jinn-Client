@@ -1,9 +1,8 @@
-package ovh.paulem.jinnclient.ui.panels.pages.content.assets;
+package ovh.paulem.jinnclient.ui.assets;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import ovh.paulem.jinnclient.Launcher;
 
 public class NewsCard {
     private final GridPane gridPane;

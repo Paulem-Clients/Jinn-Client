@@ -29,8 +29,8 @@ public class GsonUtils {
         }
     }
 
-    public static<T> T parseJson(Class<T> type) throws Exception {
-        String address = Files.readAllLines(GameUtils.getJarPath().getParent().resolve("ip.txt"), StandardCharsets.UTF_8).get(0);
+    public static<T> T getServerJson(Class<T> type) throws Exception {
+        String address = "";
         String json = readUrl("https://api.minetools.eu/ping/" + address.replace(":", "/"));
 
         Gson gson = new Gson();

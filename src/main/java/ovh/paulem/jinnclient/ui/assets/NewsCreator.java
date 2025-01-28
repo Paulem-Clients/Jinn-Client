@@ -1,4 +1,4 @@
-package ovh.paulem.jinnclient.ui.panels.pages.content.assets;
+package ovh.paulem.jinnclient.ui.assets;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

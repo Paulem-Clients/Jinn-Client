@@ -65,8 +65,7 @@ public final class RPC {
 
     public void updateServerInfos() {
         try {
-            MinetoolsServer server = GsonUtils.parseJson(MinetoolsServer.class);
-
+            MinetoolsServer server = GsonUtils.getServerJson(MinetoolsServer.class);
             int onlinePlayers = server.players().online();
 
             if(onlinePlayers == 0) {

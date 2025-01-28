@@ -86,7 +86,7 @@ tasks.withType<JPackageTask>().configureEach {
 
 var infra = ""
 tasks.register<JPackageTask>("zipjpackage") {
-    finalizedBy("zipPackage")
+    group = tasks.jpackage.get().group
 
     type = ImageType.APP_IMAGE
 
@@ -105,9 +105,12 @@ tasks.register<JPackageTask>("zipjpackage") {
         winConsole = true
         infra = "windows"
     }
+
+    finalizedBy("renameZip")
 }
 
-tasks.register<Zip>("zipPackage") {
+tasks.register<Zip>("renameZip") {
+    group = tasks.jpackage.get().group
     archiveFileName.set(infra + "-" + rootProject.name + "-" + project.version + ".zip")
     destinationDirectory.set(layout.projectDirectory.dir("dist"))
 
