@@ -31,7 +31,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Gradle jpackage
-        run: ./gradlew jpackage --debug
+        run: ./gradlew jpackage
 
       - name: Gradle zipjpackage
         run: ./gradlew zipjpackage
