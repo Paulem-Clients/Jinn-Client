@@ -1,7 +1,10 @@
 package ovh.paulem.jinnclient.ui.panels.pages;
 
-import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
-import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
+import javafx.scene.layout.VBox;
+import org.kordamp.ikonli.fluentui.FluentUiFilledAL;
+import org.kordamp.ikonli.fluentui.FluentUiFilledMZ;
+import org.kordamp.ikonli.ionicons4.Ionicons4IOS;
+import org.kordamp.ikonli.javafx.FontIcon;
 import ovh.paulem.jinnclient.Launcher;
 import ovh.paulem.jinnclient.ui.panels.PanelManager;
 import ovh.paulem.jinnclient.ui.panels.Panel;
@@ -51,8 +54,8 @@ public class SideBar extends Panel {
 
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setHalignment(HPos.LEFT);
-        columnConstraints.setMinWidth(350);
-        columnConstraints.setMaxWidth(350);
+        columnConstraints.setMinWidth(150);
+        columnConstraints.setMaxWidth(150);
         this.layout.getColumnConstraints().addAll(columnConstraints, new ColumnConstraints());
 
         // Side menu
@@ -78,50 +81,42 @@ public class SideBar extends Panel {
         /*
          * Side menu
          */
-        // Titre
-        Label title = new Label("Launcher MC");
-        title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 30f));
-        title.getStyleClass().add("home-title");
-        setCenterH(title);
-        setCanTakeAllSize(title);
-        setTop(title);
-        title.setTextAlignment(TextAlignment.CENTER);
-        title.setTranslateY(Constants.TITLE_OFFSET_Y);
-        sidemenu.getChildren().add(title);
+
+        VBox icons = new VBox(25);
+        icons.setTranslateY(75d);
 
         // Navigation
-        homeBtn = new Button("Accueil");
+        homeBtn = new Button();
         homeBtn.getStyleClass().add("sidemenu-nav-btn");
-        final var homeIcon = new MaterialDesignIconView<>(MaterialDesignIcon.H.HOME);
+        FontIcon homeIcon = FontIcon.of(FluentUiFilledAL.GAMES_24);
         homeIcon.getStyleClass().add("sidemenu-nav-btn-icon");
         homeIcon.setTranslateY(Constants.NAVBUTTON_OFFSET_Y);
         homeBtn.setGraphic(homeIcon);
         setCanTakeAllSize(homeBtn);
         setTop(homeBtn);
-        homeBtn.setTranslateY(90d);
         homeBtn.setOnMouseClicked(e -> setPage(new Home(), homeBtn));
 
-        settingsBtn = new Button("Paramètres");
+        settingsBtn = new Button();
         settingsBtn.getStyleClass().add("sidemenu-nav-btn");
-        final var settingsIcon = new MaterialDesignIconView<>(MaterialDesignIcon.C.COG);
+        FontIcon settingsIcon = FontIcon.of(FluentUiFilledMZ.SETTINGS_24);
         settingsIcon.getStyleClass().add("sidemenu-nav-btn-icon");
         settingsIcon.setTranslateY(Constants.NAVBUTTON_OFFSET_Y);
         settingsBtn.setGraphic(settingsIcon);
         setCanTakeAllSize(settingsBtn);
         setTop(settingsBtn);
-        settingsBtn.setTranslateY(130d);
         settingsBtn.setOnMouseClicked(e -> setPage(new Settings(), settingsBtn));
 
-        sidemenu.getChildren().addAll(homeBtn, settingsBtn);
+        icons.getChildren().addAll(homeBtn, settingsBtn);
+        sidemenu.getChildren().add(icons);
 
         if (Launcher.getInstance().getAuthInfos() != null) {
             // Pseudo + avatar
             GridPane userPane = new GridPane();
             setCanTakeAllWidth(userPane);
-            userPane.setMaxHeight(80);
+            userPane.setMaxHeight(75);
             userPane.setMinWidth(80);
             userPane.getStyleClass().add("user-pane");
-            setBottom(userPane);
+            setTop(userPane);
 
             String avatarUrl = "https://minotar.net/avatar/" + (
                     saver.get("offline-username") != null ?
@@ -150,7 +145,7 @@ public class SideBar extends Panel {
             userPane.getChildren().add(usernameLabel);
 
             Button logoutBtn = new Button();
-            final var logoutIcon = new MaterialDesignIconView<>(MaterialDesignIcon.L.LOGOUT);
+            FontIcon logoutIcon = FontIcon.of(Ionicons4IOS.LOG_OUT);
             logoutIcon.getStyleClass().add("logout-icon");
             setCanTakeAllSize(logoutBtn);
             setCenterV(logoutBtn);

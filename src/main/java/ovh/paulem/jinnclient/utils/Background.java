@@ -1,13 +1,7 @@
 package ovh.paulem.jinnclient.utils;
 
 public enum Background {
-    VOLCANIC("volcanic"),
-    SPAWN("spawn"),
-    FOREST("forest"),
-    WATER("water"),
-    ISLAND("island"),
-    FORTRESS("fortress"),
-    BLACK_NETHER("black_nether");
+    WATER("water");
 
     final String name;
 

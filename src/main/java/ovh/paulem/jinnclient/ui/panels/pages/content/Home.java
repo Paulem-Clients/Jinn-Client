@@ -1,9 +1,10 @@
 package ovh.paulem.jinnclient.ui.panels.pages.content;
 
-import fr.flowarg.materialdesignfontfx.MaterialDesignIcon;
-import fr.flowarg.materialdesignfontfx.MaterialDesignIconView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import org.kordamp.ikonli.fluentui.FluentUiFilledMZ;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+import org.kordamp.ikonli.javafx.FontIcon;
 import ovh.paulem.jinnclient.Launcher;
 import ovh.paulem.jinnclient.game.Launch;
 import ovh.paulem.jinnclient.ui.panels.PanelManager;
@@ -53,10 +54,10 @@ public class Home extends ContentPanel {
         NewsCard newsCarda = new NewsCard("Newsaa Title", "This is a brief description of the news contentaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         NewsCard newsCardaa = new NewsCard("Newsaa Title", "This is a brief description of the news contentaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         NewsCard newsCarada = new NewsCard("Newsaa Title", "This is a brief description of the news contentaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        NewsCard newsaCarada = new NewsCard("Newsaa Taitle", "This is a brief description of the news contentaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        NewsCard newsaCarada = new NewsCard("aaaa", "aaaa");
 
         NewsCreator newsCreator = new NewsCreator(newsBox, sideBar);
-        newsCreator.addNewsCards(newsCard, newsCarda, newsCardaa, newsCarada, newsaCarada);
+        newsCreator.addNewsCards(newsCard, newsCarda, newsCardaa, newsCarada, newsaCarada, new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"), new NewsCard("aaaa", "aaaa"));
         newsCreator.showCards();
 
         launch = new Launch(this, saver, logger, contentPane, progressBar, stepLabel, fileLabel);
@@ -95,8 +96,8 @@ public class Home extends ContentPanel {
 
     public void showPlayButton() {
         contentPane.getChildren().clear();
-        Button playBtn = new Button("Jouer");
-        final var playIcon = new MaterialDesignIconView<>(MaterialDesignIcon.G.GAMEPAD);
+        Button playBtn = new Button("Lancer");
+        FontIcon playIcon = FontIcon.of(FluentUiFilledMZ.PLAY_24);
         playIcon.getStyleClass().add("play-icon");
         setCanTakeAllSize(playBtn);
         setCenterH(playBtn);

@@ -37,7 +37,11 @@ repositories {
 
 dependencies {
     implementation("fr.litarvan:openauth:1.+")
-    implementation("fr.flowarg:materialdesignfontfx:7.+")
+
+    implementation("org.kordamp.ikonli:ikonli-javafx:12.+")
+    implementation("org.kordamp.ikonli:ikonli-ionicons4-pack:12.+")
+    implementation("org.kordamp.ikonli:ikonli-fluentui-pack:12.+")
+    implementation("org.kordamp.ikonli:ikonli-fontawesome5-pack:12.+")
 
     implementation("fr.flowarg:flowupdater:1.9.2")
     implementation("fr.flowarg:openlauncherlib:3+")
@@ -160,6 +164,10 @@ tasks.shadowJar {
 
     archiveVersion.set("")
     archiveClassifier.set("")
+
+    exclude("META-INF/**")
+
+    mergeServiceFiles()
 }
 
 tasks.register<Delete>("deleteDist") {

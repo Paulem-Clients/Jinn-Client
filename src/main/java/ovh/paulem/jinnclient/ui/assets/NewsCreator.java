@@ -53,13 +53,13 @@ public class NewsCreator {
             for (NewsCard newsCard : newsCards) {
                 if (newsCard != null) {
                     GridPane gridPane = newsCard.getGridPane();
-                    gridPane.setMaxWidth((sideBar.getPanelManager().getStage().getWidth()-widthReducers) / newsCards.length);
+                    double width = (sideBar.getPanelManager().getStage().getWidth() - widthReducers - newsCard.getGridPane().getPadding().getRight() - newsCard.getGridPane().getPadding().getLeft()) / newsCards.length;
+                    gridPane.setMinWidth(width);
+                    gridPane.setMaxWidth(width);
                     list.add(gridPane);
                 }
             }
-            cardsBox.getChildren().addAll(
-                    list
-            );
+            cardsBox.getChildren().addAll(list);
             newsContainer.getChildren().add(cardsBox);
         }
     }
