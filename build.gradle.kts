@@ -40,7 +40,7 @@ dependencies {
     implementation("fr.flowarg:materialdesignfontfx:7.+")
 
     implementation("fr.flowarg:flowupdater:1.9.2")
-    implementation("fr.flowarg:openlauncherlib:3+")
+    implementation("fr.flowarg:openlauncherlib:3.2.11")
 
     implementation("club.minnced:java-discord-rpc:2.0.2")
 
