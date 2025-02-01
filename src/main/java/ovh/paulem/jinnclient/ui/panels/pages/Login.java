@@ -152,6 +152,8 @@ public class Login extends Panel {
 
         if (textField.getText().isEmpty()) {
             errorLabel.setText("Le champ ne peut être vide");
+        } else if (textField.getText().length() > 16) {
+            errorLabel.setText("Le pseudo doit contenir moins de 17 caractères");
         } else {
             errorLabel.setText("");
         }

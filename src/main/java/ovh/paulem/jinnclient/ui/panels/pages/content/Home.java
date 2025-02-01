@@ -3,10 +3,10 @@ package ovh.paulem.jinnclient.ui.panels.pages.content;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.fluentui.FluentUiFilledMZ;
-import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 import ovh.paulem.jinnclient.Launcher;
 import ovh.paulem.jinnclient.game.Launch;
+import ovh.paulem.jinnclient.ui.assets.UserPane;
 import ovh.paulem.jinnclient.ui.panels.PanelManager;
 import ovh.paulem.jinnclient.ui.panels.pages.SideBar;
 import ovh.paulem.jinnclient.ui.assets.NewsCard;
@@ -71,7 +71,7 @@ public class Home extends ContentPanel {
         this.layout.getRowConstraints().addAll(rowConstraints, new RowConstraints());
         contentPane.getStyleClass().add("box-pane");
         setCanTakeAllSize(contentPane);
-        contentPane.setPadding(new Insets(20));
+        contentPane.setPadding(new Insets(10));
         this.layout.add(contentPane, 0, 0);
         this.layout.getStyleClass().add("home-layout");
 
@@ -106,6 +106,10 @@ public class Home extends ContentPanel {
         playBtn.setGraphic(playIcon);
         playBtn.setOnMouseClicked(e -> launch.play());
         contentPane.getChildren().add(playBtn);
+
+        if (Launcher.getInstance().getAuthInfos() != null) {
+            new UserPane(this, contentPane, this).show();
+        }
     }
 
     public boolean isDownloadingOrPlaying() {

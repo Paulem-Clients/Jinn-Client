@@ -28,21 +28,21 @@
     -fx-alignment: center-left;
 }
 
-.sidemenu-nav-btn:hover {
-    -fx-background-color: rgb(65, 65, 65);
-}
-
 .sidemenu-nav-btn.active {
     -fx-border-color: rgb(48, 48, 48);
-    -fx-background-color: rgb(80, 80, 80);
 }
 
 .sidemenu-nav-btn-icon {
     -fx-fill: rgb(200, 200, 200);
 }
 
+.sidemenu-nav-btn-icon:hover {
+    -fx-fill: rgb(240, 240, 240);
+}
+
 .user-pane {
     -fx-background-color: rgb(48, 48, 48);
+    -fx-background-radius: 5px;
 }
 
 .user-pane .username-label {
@@ -60,4 +60,8 @@
 
 .logout-icon {
     -fx-fill: rgb(246, 55, 55);
+}
+
+.logout-icon:hover {
+    -fx-fill: rgb(248, 81, 81);
 }

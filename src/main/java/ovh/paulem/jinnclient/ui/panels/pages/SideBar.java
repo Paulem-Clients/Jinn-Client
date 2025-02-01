@@ -3,9 +3,7 @@ package ovh.paulem.jinnclient.ui.panels.pages;
 import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.fluentui.FluentUiFilledAL;
 import org.kordamp.ikonli.fluentui.FluentUiFilledMZ;
-import org.kordamp.ikonli.ionicons4.Ionicons4IOS;
 import org.kordamp.ikonli.javafx.FontIcon;
-import ovh.paulem.jinnclient.Launcher;
 import ovh.paulem.jinnclient.ui.panels.PanelManager;
 import ovh.paulem.jinnclient.ui.panels.Panel;
 import ovh.paulem.jinnclient.ui.panels.pages.content.ContentPanel;
@@ -15,15 +13,8 @@ import ovh.paulem.jinnclient.utils.Constants;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 
 public class SideBar extends Panel {
     private final GridPane sidemenu = new GridPane();
@@ -81,7 +72,6 @@ public class SideBar extends Panel {
         /*
          * Side menu
          */
-
         VBox icons = new VBox(25);
         icons.setTranslateY(75d);
 
@@ -108,67 +98,6 @@ public class SideBar extends Panel {
 
         icons.getChildren().addAll(homeBtn, settingsBtn);
         sidemenu.getChildren().add(icons);
-
-        if (Launcher.getInstance().getAuthInfos() != null) {
-            // Pseudo + avatar
-            GridPane userPane = new GridPane();
-            setCanTakeAllWidth(userPane);
-            userPane.setMaxHeight(75);
-            userPane.setMinWidth(80);
-            userPane.getStyleClass().add("user-pane");
-            setTop(userPane);
-
-            String avatarUrl = "https://minotar.net/avatar/" + (
-                    saver.get("offline-username") != null ?
-                            "MHF_Steve.png" :
-                            Launcher.getInstance().getAuthInfos().getUuid() + ".png"
-            );
-            ImageView avatarView = new ImageView();
-            Image avatarImg = new Image(avatarUrl);
-            avatarView.setImage(avatarImg);
-            avatarView.setPreserveRatio(true);
-            avatarView.setFitHeight(50d);
-            setCenterV(avatarView);
-            setCanTakeAllSize(avatarView);
-            setLeft(avatarView);
-            avatarView.setTranslateX(15d);
-            userPane.getChildren().add(avatarView);
-
-            Label usernameLabel = new Label(Launcher.getInstance().getAuthInfos().getUsername());
-            usernameLabel.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 25f));
-            setCanTakeAllSize(usernameLabel);
-            setCenterV(usernameLabel);
-            setLeft(usernameLabel);
-            usernameLabel.getStyleClass().add("username-label");
-            usernameLabel.setTranslateX(75d);
-            setCanTakeAllWidth(usernameLabel);
-            userPane.getChildren().add(usernameLabel);
-
-            Button logoutBtn = new Button();
-            FontIcon logoutIcon = FontIcon.of(Ionicons4IOS.LOG_OUT);
-            logoutIcon.getStyleClass().add("logout-icon");
-            setCanTakeAllSize(logoutBtn);
-            setCenterV(logoutBtn);
-            setRight(logoutBtn);
-            logoutBtn.getStyleClass().add("logout-btn");
-            logoutBtn.setGraphic(logoutIcon);
-            logoutBtn.setOnMouseClicked(e -> {
-                if (currentPage instanceof Home && ((Home) currentPage).isDownloadingOrPlaying()) {
-                    return;
-                }
-                saver.remove("accessToken");
-                saver.remove("clientToken");
-                saver.remove("offline-username");
-                saver.remove("msAccessToken");
-                saver.remove("msRefreshToken");
-                saver.save();
-                Launcher.getInstance().setAuthInfos(null);
-                this.panelManager.showPanel(new Login());
-            });
-            userPane.getChildren().add(logoutBtn);
-
-            sidemenu.getChildren().add(userPane);
-        }
     }
 
     @Override

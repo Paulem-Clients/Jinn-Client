@@ -1,6 +1,7 @@
 import org.gradle.internal.jvm.Jvm
 import org.panteleyev.jpackage.ImageType
 import org.panteleyev.jpackage.JPackageTask
+import proguard.gradle.ProGuardTask
 
 plugins {
     id("idea")
@@ -8,6 +9,17 @@ plugins {
     id("java")
     id("application")
     id("org.panteleyev.jpackageplugin") version "1.6.0"
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.guardsquare:proguard-gradle:7.+") {
+            exclude("com.android.tools.build")
+        }
+    }
 }
 
 group = "ovh.paulem.jinnclient"
@@ -39,9 +51,8 @@ dependencies {
     implementation("fr.litarvan:openauth:1.+")
 
     implementation("org.kordamp.ikonli:ikonli-javafx:12.+")
-    implementation("org.kordamp.ikonli:ikonli-ionicons4-pack:12.+")
     implementation("org.kordamp.ikonli:ikonli-fluentui-pack:12.+")
-    implementation("org.kordamp.ikonli:ikonli-fontawesome5-pack:12.+")
+    implementation("org.kordamp.ikonli:ikonli-ionicons4-pack:12.+")
 
     implementation("fr.flowarg:flowupdater:1.9.2")
     implementation("fr.flowarg:openlauncherlib:3+")
@@ -153,11 +164,9 @@ tasks.clean {
     dependsOn("deleteDist")
 }
 
-tasks.jar {
-    finalizedBy(tasks.shadowJar)
-}
-
 tasks.shadowJar {
+    mustRunAfter(tasks.clean)
+
     mustRunAfter(tasks.distZip)
     mustRunAfter(tasks.distTar)
     mustRunAfter(tasks.startScripts)
@@ -165,7 +174,7 @@ tasks.shadowJar {
     archiveVersion.set("")
     archiveClassifier.set("")
 
-    exclude("META-INF/**")
+    //exclude("META-INF/**")
 
     mergeServiceFiles()
 }
@@ -177,7 +186,7 @@ tasks.register<Delete>("deleteDist") {
 tasks.register<JavaExec>("runShadowJar") {
     val javaPath = Jvm.current().javaExecutable.toString()
 
-    group = "application"
+    group = tasks.runShadow.get().group
     description = "Builds and runs the shadow jar using the specified Java path"
 
     dependsOn(tasks.shadowJar)
@@ -185,6 +194,36 @@ tasks.register<JavaExec>("runShadowJar") {
     classpath = files(tasks.shadowJar.get().archiveFile)
     setExecutable(javaPath)
     jvmArgs(jvmOpts)
-
-    //finalizedBy(tasks.clean)
 }
+
+val proguardFile = file("build/libs/proguard-${tasks.shadowJar.get().archiveFileName.get()}")
+
+// ------------------------ PROGUARD ------------------------
+tasks.register<ProGuardTask>("proguardJar") {
+    outputs.upToDateWhen { false }
+    dependsOn(tasks.shadowJar)
+
+    configuration("proguard-rules.pro")
+
+    injars(tasks.shadowJar)
+    outjars(proguardFile)
+} // Add class name obfuscation to the proguard-rules.pro file
+
+tasks.register<JavaExec>("runProguardShadowJar") {
+    val javaPath = Jvm.current().javaExecutable.toString()
+
+    group = tasks.runShadow.get().group
+    description = "Builds and runs the proguard shadow jar using the specified Java path"
+
+    dependsOn("proguardJar")
+
+    classpath = files(proguardFile)
+    setExecutable(javaPath)
+    jvmArgs(jvmOpts)
+}
+
+tasks.build {
+    dependsOn(tasks.clean, "proguardJar")
+}
+
+tasks.jar { enabled = false }

@@ -1,7 +1,8 @@
 package ovh.paulem.jinnclient.ui.panels.pages.content;
 
 import com.sun.management.OperatingSystemMXBean;
-import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+import org.kordamp.ikonli.fluentui.FluentUiFilledAL;
+import org.kordamp.ikonli.fluentui.FluentUiRegularMZ;
 import org.kordamp.ikonli.javafx.FontIcon;
 import ovh.paulem.jinnclient.ui.panels.PanelManager;
 import ovh.paulem.jinnclient.ui.panels.pages.SideBar;
@@ -110,9 +111,9 @@ public class Settings extends ContentPanel {
          */
         Button saveBtn = new Button("Enregistrer");
         saveBtn.getStyleClass().add("save-btn");
-        FontIcon iconView = FontIcon.of(FontAwesomeSolid.SAVE);
+        FontIcon iconView = FontIcon.of(FluentUiRegularMZ.SAVE_24);
         iconView.getStyleClass().add("save-icon");
-        FontIcon iconCheck = FontIcon.of(FontAwesomeSolid.CHECK);
+        FontIcon iconCheck = FontIcon.of(FluentUiFilledAL.CHECKMARK_24);
         iconCheck.getStyleClass().add("save-icon");
         saveBtn.setGraphic(iconView);
         setCanTakeAllSize(saveBtn);
