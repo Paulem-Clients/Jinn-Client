@@ -17,8 +17,9 @@
 
 .sidemenu-nav-btn {
     -fx-border-width: 0 0 0 10px;
+    -fx-border-radius: 1px;
     -fx-background-color: transparent;
-    -fx-font-size: 60px;
+    -fx-font-size: 50px;
     -fx-text-alignment: left;
     -fx-text-fill: rgb(255, 255, 255);
     -fx-border-color: transparent;
@@ -41,7 +42,7 @@
 }
 
 .user-pane {
-    -fx-background-color: rgb(48, 48, 48);
+    -fx-background-color: rgb(32, 32, 32);
     -fx-background-radius: 5px;
 }
 
@@ -63,5 +64,5 @@
 }
 
 .logout-icon:hover {
-    -fx-fill: rgb(248, 81, 81);
+    -fx-fill: rgb(246, 100, 100);
 }

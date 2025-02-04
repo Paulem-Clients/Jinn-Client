@@ -9,7 +9,6 @@ import ovh.paulem.jinnclient.ui.panels.pages.SideBar;
 import ovh.paulem.jinnclient.utils.Constants;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -36,16 +35,6 @@ public class Settings extends ContentPanel {
     public void init(PanelManager panelManager, SideBar sideBar) {
         super.init(panelManager, sideBar);
 
-        // Background
-        this.layout.getStyleClass().add("settings-layout");
-        this.layout.setPadding(new Insets(40));
-        setCanTakeAllSize(this.layout);
-
-        // Content
-        contentPane.getStyleClass().add("content-pane");
-        setCanTakeAllSize(contentPane);
-        this.layout.getChildren().add(contentPane);
-
         // Titre
         Label title = new Label("Paramètres");
         title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 25f));
@@ -54,9 +43,7 @@ public class Settings extends ContentPanel {
         setCanTakeAllSize(title);
         setTop(title);
         title.setTextAlignment(TextAlignment.LEFT);
-        title.setTranslateY(40d);
-        title.setTranslateX(25d);
-        contentPane.getChildren().add(title);
+        content.add(title, 0, 0);
 
         // RAM
         Label ramLabel = new Label("Mémoire max");
@@ -65,9 +52,7 @@ public class Settings extends ContentPanel {
         setCanTakeAllSize(ramLabel);
         setTop(ramLabel);
         ramLabel.setTextAlignment(TextAlignment.LEFT);
-        ramLabel.setTranslateX(25d);
-        ramLabel.setTranslateY(100d);
-        contentPane.getChildren().add(ramLabel);
+        content.add(ramLabel, 0, 1);
 
         // RAM Chooser
 
@@ -102,9 +87,7 @@ public class Settings extends ContentPanel {
         setLeft(comboBox);
         setCanTakeAllSize(comboBox);
         setTop(comboBox);
-        comboBox.setTranslateX(35d);
-        comboBox.setTranslateY(130d);
-        contentPane.getChildren().add(comboBox);
+        content.add(comboBox, 1, 1);
 
         /*
          * Save Button
@@ -134,6 +117,8 @@ public class Settings extends ContentPanel {
             }));
             timeline.play();
         });
-        contentPane.getChildren().add(saveBtn);
+        content.add(saveBtn, 0, 2, 1, 2);
+
+        this.showPlayButton();
     }
 }

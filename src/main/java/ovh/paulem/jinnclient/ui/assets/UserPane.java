@@ -1,7 +1,6 @@
 package ovh.paulem.jinnclient.ui.assets;
 
 import fr.theshark34.openlauncherlib.util.Saver;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -92,7 +91,6 @@ public class UserPane {
         userPane.getChildren().add(logoutBtn);
 
         double width = FxUtils.getTextSize(usernameLabel, usernameLabel.getText());
-        System.out.println(width);
         userPane.setMaxWidth(40d + 20d + width + (30d*2));
         parent.getChildren().add(userPane);
     }

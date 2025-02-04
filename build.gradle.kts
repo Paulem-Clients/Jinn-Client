@@ -7,6 +7,7 @@ plugins {
     id("idea")
     id("com.gradleup.shadow") version "8.+"
     id("java")
+    id("java-library")
     id("application")
     id("org.panteleyev.jpackageplugin") version "1.6.1"
 }
@@ -53,6 +54,8 @@ dependencies {
     implementation("org.kordamp.ikonli:ikonli-javafx:12.+")
     implementation("org.kordamp.ikonli:ikonli-fluentui-pack:12.+")
     implementation("org.kordamp.ikonli:ikonli-ionicons4-pack:12.+")
+
+    api("io.github.typhon0:AnimateFX:1.3.0")
 
     implementation("fr.flowarg:flowupdater:1.9.2")
     implementation("fr.flowarg:openlauncherlib:3.2.11")

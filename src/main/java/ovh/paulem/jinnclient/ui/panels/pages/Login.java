@@ -1,5 +1,6 @@
 package ovh.paulem.jinnclient.ui.panels.pages;
 
+import javafx.scene.input.KeyEvent;
 import ovh.paulem.jinnclient.Launcher;
 import ovh.paulem.jinnclient.game.Authentification;
 import ovh.paulem.jinnclient.ui.panels.PanelManager;
@@ -15,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import ovh.paulem.jinnclient.utils.FxUtils;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -26,6 +28,7 @@ public class Login extends Panel {
     private final AtomicBoolean offlineAuth = new AtomicBoolean(false);
 
     private final TextField userField = new TextField();
+    private static final double MAX_WIDTH = 280; // Maximum width for the text
     private final Label userErrorLabel = new Label();
     private final Button btnLogin = new Button("Connexion");
     private final Button msLoginBtn = new Button();
@@ -92,6 +95,7 @@ public class Login extends Panel {
         userField.setMaxWidth(300);
         userField.setTranslateY(-70d);
         userField.getStyleClass().add("login-input");
+
         userField.textProperty().addListener((_a, oldValue, newValue) -> this.updateLoginBtnState(userField, userErrorLabel));
 
         // User error
@@ -100,7 +104,7 @@ public class Login extends Panel {
         setCenterH(userErrorLabel);
         userErrorLabel.getStyleClass().add("login-error");
         userErrorLabel.setTranslateY(-35d);
-        userErrorLabel.setMaxWidth(280);
+        userErrorLabel.setMaxWidth(MAX_WIDTH);
         userErrorLabel.setTextAlignment(TextAlignment.LEFT);
 
         // Login button

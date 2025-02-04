@@ -1,6 +1,7 @@
 package ovh.paulem.jinnclient.ui.panels;
 
 import ovh.paulem.jinnclient.Launcher;
+import ovh.paulem.jinnclient.ui.panels.pages.content.ContentPanel;
 import ovh.paulem.jinnclient.ui.panels.pages.content.Settings;
 import ovh.paulem.jinnclient.utils.Background;
 import javafx.scene.Scene;
@@ -35,6 +36,7 @@ public class PanelManager {
         this.stage.getIcons().add(new Image("images/icon.png"));
 
         GridPane layout = new GridPane();
+        layout.getStyleClass().add("main-layout");
 
         Scene scene = new Scene(layout);
         this.stage.setScene(scene);
@@ -51,6 +53,7 @@ public class PanelManager {
         this.contentPane.getChildren().add(panel.getLayout());
         if (panel.getStylesheetPath() != null) {
             this.stage.getScene().getStylesheets().clear();
+            this.stage.getScene().getStylesheets().add("css/main.css");
             this.stage.getScene().getStylesheets().add(panel.getStylesheetPath());
             setBackground(this.stage.getScene(), null);
         }

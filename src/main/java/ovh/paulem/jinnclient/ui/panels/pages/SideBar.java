@@ -1,6 +1,6 @@
 package ovh.paulem.jinnclient.ui.panels.pages;
 
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.kordamp.ikonli.fluentui.FluentUiFilledAL;
 import org.kordamp.ikonli.fluentui.FluentUiFilledMZ;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -9,12 +9,13 @@ import ovh.paulem.jinnclient.ui.panels.Panel;
 import ovh.paulem.jinnclient.ui.panels.pages.content.ContentPanel;
 import ovh.paulem.jinnclient.ui.panels.pages.content.Home;
 import ovh.paulem.jinnclient.ui.panels.pages.content.Settings;
-import ovh.paulem.jinnclient.utils.Constants;
 import javafx.geometry.HPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
 
 public class SideBar extends Panel {
     private final GridPane sidemenu = new GridPane();
@@ -23,7 +24,7 @@ public class SideBar extends Panel {
     private Node activeLink = null;
     private ContentPanel currentPage = null;
 
-    private Button homeBtn, settingsBtn;
+    private Button homeBtn, storeBtn, settingsBtn;
 
     @Override
     public String getName() {
@@ -45,8 +46,8 @@ public class SideBar extends Panel {
 
         ColumnConstraints columnConstraints = new ColumnConstraints();
         columnConstraints.setHalignment(HPos.LEFT);
-        columnConstraints.setMinWidth(150);
-        columnConstraints.setMaxWidth(150);
+        columnConstraints.setMinWidth(120);
+        columnConstraints.setMaxWidth(120);
         this.layout.getColumnConstraints().addAll(columnConstraints, new ColumnConstraints());
 
         // Side menu
@@ -80,23 +81,30 @@ public class SideBar extends Panel {
         homeBtn.getStyleClass().add("sidemenu-nav-btn");
         FontIcon homeIcon = FontIcon.of(FluentUiFilledAL.GAMES_24);
         homeIcon.getStyleClass().add("sidemenu-nav-btn-icon");
-        homeIcon.setTranslateY(Constants.NAVBUTTON_OFFSET_Y);
         homeBtn.setGraphic(homeIcon);
-        setCanTakeAllSize(homeBtn);
-        setTop(homeBtn);
         homeBtn.setOnMouseClicked(e -> setPage(new Home(), homeBtn));
+
+        storeBtn = new Button();
+        storeBtn.getStyleClass().add("sidemenu-nav-btn");
+        FontIcon storeIcon = FontIcon.of(FluentUiFilledAL.CART_24);
+        storeIcon.getStyleClass().add("sidemenu-nav-btn-icon");
+        storeBtn.setGraphic(storeIcon);
+        storeBtn.setOnMouseClicked(e -> {
+            try {
+                Desktop.getDesktop().browse(URI.create("https://example.com"));
+            } catch (IOException ex) {
+                logger.printStackTrace(ex);
+            }
+        });
 
         settingsBtn = new Button();
         settingsBtn.getStyleClass().add("sidemenu-nav-btn");
         FontIcon settingsIcon = FontIcon.of(FluentUiFilledMZ.SETTINGS_24);
         settingsIcon.getStyleClass().add("sidemenu-nav-btn-icon");
-        settingsIcon.setTranslateY(Constants.NAVBUTTON_OFFSET_Y);
         settingsBtn.setGraphic(settingsIcon);
-        setCanTakeAllSize(settingsBtn);
-        setTop(settingsBtn);
         settingsBtn.setOnMouseClicked(e -> setPage(new Settings(), settingsBtn));
 
-        icons.getChildren().addAll(homeBtn, settingsBtn);
+        icons.getChildren().addAll(homeBtn, storeBtn, settingsBtn);
         sidemenu.getChildren().add(icons);
     }
 
@@ -107,7 +115,7 @@ public class SideBar extends Panel {
     }
 
     public void setPage(ContentPanel panel, Node navButton) {
-        if (currentPage instanceof Home && ((Home) currentPage).isDownloadingOrPlaying()) {
+        if (currentPage instanceof Home && currentPage.isDownloadingOrPlaying()) {
             return;
         }
         if (activeLink != null)
@@ -123,6 +131,7 @@ public class SideBar extends Panel {
                 this.panelManager.getStage().getScene().getStylesheets().clear();
                 this.panelManager.getStage().getScene().getStylesheets().addAll(
                         this.getStylesheetPath(),
+                        "css/content/content.css",
                         panel.getStylesheetPath()
                 );
                 PanelManager.setBackground(this.panelManager.getStage().getScene(), panel);

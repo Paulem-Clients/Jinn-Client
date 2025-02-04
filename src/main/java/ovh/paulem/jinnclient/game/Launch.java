@@ -14,7 +14,7 @@ import fr.theshark34.openlauncherlib.util.Saver;
 import ovh.paulem.jinnclient.Launcher;
 import ovh.paulem.jinnclient.game.minecraft.MinecraftInfos;
 import ovh.paulem.jinnclient.game.minecraft.MinecraftVersion;
-import ovh.paulem.jinnclient.ui.panels.pages.content.Home;
+import ovh.paulem.jinnclient.ui.panels.pages.content.ContentPanel;
 import ovh.paulem.jinnclient.utils.Constants;
 import ovh.paulem.jinnclient.utils.Errors;
 import javafx.application.Platform;
@@ -27,9 +27,9 @@ import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-public record Launch(Home home, Saver saver, ILogger logger, GridPane boxPane, ProgressBar progressBar, Label stepLabel, Label fileLabel) {
+public record Launch(ContentPanel contentPanel, Saver saver, ILogger logger, GridPane boxPane, ProgressBar progressBar, Label stepLabel, Label fileLabel) {
     public void play() {
-        home.setDownloadingOrPlaying(true);
+        contentPanel.setDownloadingOrPlaying(true);
         boxPane.getChildren().clear();
         setProgress(0, 0);
         boxPane.getChildren().addAll(progressBar, stepLabel, fileLabel);
@@ -143,8 +143,8 @@ public record Launch(Home home, Saver saver, ILogger logger, GridPane boxPane, P
     private void checkStopped(Process p) {
         try {
             p.waitFor();
-            home.setDownloadingOrPlaying(false);
-            Platform.runLater(home::showPlayButton);
+            contentPanel.setDownloadingOrPlaying(false);
+            Platform.runLater(contentPanel::showPlayButton);
 
             Launcher.getInstance().getDiscordRPC().editPresence(Constants.RPC_LAUNCHER);
         } catch (InterruptedException e) {

@@ -1,13 +1,5 @@
-.settings-layout {
-    -fx-background-color: rgb(24, 24, 24);
-}
-
 .settings-title {
     -fx-text-fill: rgb(255, 255, 255);
-}
-
-.content-pane,  {
-    -fx-background-color: transparent;
 }
 
 .scroll-pane .scroll-pane .viewport {
@@ -35,11 +27,16 @@
     -fx-background-color: rgb(255, 255, 255);
 }
 
-.ram-selector .list-view {
+.ram-selector .list-view, .ram-selector .increment-button, .ram-selector .decrement-button {
     -fx-background-color: rgb(48, 48, 48);
 }
 
+.ram-selector .decrement-arrow, .ram-selector .increment-arrow {
+    -fx-background-color: rgb(200, 200, 200);
+}
+
 .ram-selector .list-cell {
+    -fx-background-color: transparent;
     -fx-text-fill: rgb(200, 200, 200);
 }
 
